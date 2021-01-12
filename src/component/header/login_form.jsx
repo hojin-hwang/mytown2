@@ -19,9 +19,10 @@ const useStyles = makeStyles((theme) => ({
 const LoginForm = (props) => {
     const classes = useStyles();
 
+    const testfunction = () =>{console.log("test");}
     return(
     <div className={classes.loginBox}>
-        <Button variant="contained" size="large" color="primary" className={classes.kakoLogin} >
+        <Button variant="contained" size="large" color="primary" className={classes.kakoLogin} onClick={testfunction}>
         카카오 로그인
         </Button>   
     </div>    

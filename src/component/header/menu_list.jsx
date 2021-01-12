@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import LoginForm from './login_form';
 
 const useStyles = makeStyles({
   list: {
@@ -17,23 +18,20 @@ const useStyles = makeStyles({
 
 });
 
-export default function MenuList( {drawState}) {
+
+export default function MenuList( {drawState, closeDrawer }) {
   const classes = useStyles();
   
-  const [state, setState] = useState({
-    top: false,
-    left: true,
-    bottom: false,
-    right: false,
-    });
-  
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-        return;
-    }
+  const toggleDrawers = (anchor, open) =>{
+    //closeDrawer(anchor, open);
+    console.log(anchor);
+    console.log(open);
+  }
 
-    setState({ ...state, [anchor]: open });
-  };
+  const test = (anchor) =>{
+    closeDrawer('left', false);
+    console.log("TTT");
+  }
 
   const list = (anchor) => (
     <div
@@ -41,9 +39,11 @@ export default function MenuList( {drawState}) {
         [classes.fullList]: anchor === 'top' || anchor === 'bottom',
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={test}
+      onKeyDown={toggleDrawers(anchor, false)}
     >
+      <LoginForm />
+
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem button key={text}>
@@ -66,7 +66,7 @@ export default function MenuList( {drawState}) {
   
   
   return (
-    <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
+    <Drawer anchor={'left'} open={drawState} onClose={toggleDrawers('left', false)}>
     {list('left')}
     </Drawer>
   );

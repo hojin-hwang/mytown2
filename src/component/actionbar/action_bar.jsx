@@ -1,40 +1,54 @@
 import { AppBar, makeStyles, Tab, Tabs } from '@material-ui/core';
 import React from 'react';
+import ActionSubBar from './action_sub_bar';
 
-function a11yProps(index) {
+/*function a11yProps(index) {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
     };
-}
+}*/
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      display : 'flex',
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.paper,
+    root : {
+        
     },
+    appBar :{
+      display : 'flex',
+      flexFlow: 'row',
+      flexWrap: 'wrap',
+      flexGrow: 1,
+      backgroundColor: 'white',
+      color : 'black',
+    },
+    indicator: {
+      backgroundColor: '#1ca23f',
+    },
+    
 }));
 
-const ActionBar = (props) => {
+const ActionBar = ({action, onClick}) => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    
 
     const handleChange = (event, newValue) => {
-        setValue(newValue);
-        console.log(newValue);
-      };
+      setValue(newValue);
+      onClick(newValue);
+    };
 
     return (
-        <div className={classes.root}>
-          <AppBar position="static">
-            <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-              <Tab label="동네소식"  />
-              <Tab label="동네가게"  />
+      <div  className={classes.root} >
+          <AppBar position="static" className={classes.appBar} >
+            <Tabs value={value} onChange={handleChange} classes={{indicator: classes.indicator}} >
+              <Tab label="News News"  />
+              <Tab label="Shops"  />
             </Tabs>
+            
+            <ActionSubBar action={action} />
+
           </AppBar>
-          <div>....</div>
-        </div>
+       </div>   
       );
 };
 

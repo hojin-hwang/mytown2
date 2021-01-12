@@ -16,7 +16,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import LoginForm from './login_form';
 
 
-
 const useStyles = makeStyles((theme) => ({
     menuButton: {
       marginRight: theme.spacing(2),
@@ -45,7 +44,6 @@ const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
         return;
     }
-
     setState({ ...state, [anchor]: open });
 };
 
@@ -64,7 +62,7 @@ const list = (anchor) => (
       </List>
       
       <LoginForm />
-
+     
       <List onClick={toggleDrawer(anchor, false)}  onKeyDown={toggleDrawer(anchor, false)}>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem button key={text}>
@@ -82,6 +80,7 @@ const list = (anchor) => (
           </ListItem>
         ))}
       </List>
+     
     </div>
 );
 
@@ -91,6 +90,7 @@ const list = (anchor) => (
             <IconButton edge="start" className={`${classes.menuButton}`} color="inherit" aria-label="menu" onClick={toggleDrawer('left',true)}>
                 <MenuIcon />
             </IconButton>
+
             <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
                 {list('left')}
             </Drawer>
