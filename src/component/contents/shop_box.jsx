@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
+import UseKakoMapScript from '../../service/use_kakao_map_script';
 import ShopCard from './shop_card';
 
 
@@ -15,10 +16,9 @@ const useStyles = makeStyles((theme) => ({
 
 const ShopBox = ({action}) => {
     const classes = useStyles();
-    
+    UseKakoMapScript();
     return(
         <div className={classes.root}>
-            <ShopCard />       
             <ShopCard />       
         </div>
     );

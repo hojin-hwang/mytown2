@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './app.css';
 import { ThemeProvider } from "@material-ui/core/styles";
 import { unstable_createMuiStrictModeTheme } from '@material-ui/core/styles';

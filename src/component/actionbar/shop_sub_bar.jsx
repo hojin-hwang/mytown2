@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'white',
         color : 'black',
         boxShadow : 'none',
+    },
+    tabs : {
+        justifyContent: 'flex-end',
     },
     subAtionBtn:{minWidth:'60px'},
 
@@ -36,10 +38,9 @@ const ShopSubBar = ({action}) => {
 
     return(
             <AppBar position="static" className={classes.appBar} >
-            <Tabs value={value} onChange={handleChange} classes={{indicator: classes.indicator}}  >
-                <Tab className={classes.subAtionBtn} icon={<PhoneIcon />} aria-label="phone"  />
+            <Tabs value={value} onChange={handleChange} className={classes.tabs} classes={{indicator: classes.indicator}}  >
                 <Tab className={classes.subAtionBtn} icon={<FavoriteIcon />} aria-label="favorite"  />
-                <Tab className={classes.subAtionBtn} icon={<PersonPinIcon />} aria-label="person"  />
+                <Tab className={classes.subAtionBtn} icon={<AttachFileIcon />} aria-label="clip"  />
             </Tabs>
             </AppBar>
     );
