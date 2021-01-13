@@ -9,18 +9,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));;
 
-const {kakao} = window;
-
 export default function KakaoMap(){
     
     const classes = useStyles();
-
    
     
     return(
-        <div id="shopMap" className={classes.map}>
-            <Map options={{ lat: 33.450701, lng: 126.570667}} level = {3} />
-        </div>
+        <Map options={{ lat: 33.450701, lng: 126.570667}} level = {3} />
     );
 
 }

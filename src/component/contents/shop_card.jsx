@@ -79,7 +79,7 @@ export default function ShopCard() {
         }
         classes={{title: classes.headerTitle}}
 
-        title="Shrimp and Chorizo"
+        title="Shrimp and Chorizoz"
       />
       <CardMedia
         className={classes.media}

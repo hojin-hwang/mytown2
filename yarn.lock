@@ -9195,7 +9195,7 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
-react-kakao-maps@Musma/react-kakao-maps#0.0.1:
+react-kakao-maps@Musma/react-kakao-maps:
   version "0.0.1"
   resolved "https://codeload.github.com/Musma/react-kakao-maps/tar.gz/d52605d1f391671c2bf2983bf118a57dd9bb3940"
   dependencies:
