@@ -4,17 +4,15 @@ import MyLocation from '@material-ui/icons/MyLocation';
 import IconButton from '@material-ui/core/IconButton';
 import UseKakoMap from '../../service/use_kakao_map';
 
-const useKakaoMap = new UseKakoMap(); 
-
 const useStyles = makeStyles((theme) => ({
     myLocationBtn: {
       
     },
 }));
 
-const MyLocationBtn = (props) => {
+const MyLocationBtn = ({setLocationInfoFromMap}) => {
     const classes = useStyles();
-    //const [currentLocationInfo, setLocationInfo] = useState();
+    const [currentGeoInfo, setGeoInfo] = useState();
 
     const getLocationInfo = function(){
         if ("geolocation" in navigator) 
@@ -26,8 +24,8 @@ const MyLocationBtn = (props) => {
              * */
             // /navigator.geolocation.watchPosition(function(position) {
             navigator.geolocation.getCurrentPosition(function(position) {
-                console.log(useKakaoMap.getTownName(position.coords));
-              });
+                setGeoInfo(position.coords);//현재 지역정보를 갱신한다.
+            });
 
             
         }
@@ -35,14 +33,21 @@ const MyLocationBtn = (props) => {
         {
             console.log("Not Available");
         }
-    }
+    };
 
+    const getLocationInfoFromMap = function(locationInfo)
+    {   
+        setLocationInfoFromMap(locationInfo)
+    };
+    
     useEffect(()=>{
         getLocationInfo();
-    });
+    },[]);
+    
 
     return(
         <IconButton edge="end" className={`${classes.myLocationBtn}`} color="inherit" aria-label="current-location" onClick={getLocationInfo}>
+            <UseKakoMap position={currentGeoInfo} getLocationInfo={getLocationInfoFromMap}/>
             <MyLocation />
         </IconButton>
     );

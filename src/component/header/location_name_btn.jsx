@@ -8,11 +8,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const LocationNameBtn = (props) => {
+const LocationNameBtn = ({townName}) => {
     const classes = useStyles();
 
     return(
-        <Button className={classes.locationName} >Login</Button>
+        <Button className={classes.locationName} >{townName}</Button>
     );
 }
 export default LocationNameBtn;

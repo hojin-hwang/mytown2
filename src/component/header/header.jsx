@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,6 +21,12 @@ const useStyles = makeStyles({
 
 export default function Header({authService, userOnLogin}) {
   const classes = useStyles();
+  const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
+
+  const setLocationInfoFromMap = function(locationInfo)
+  {   
+      setLocationInfo(locationInfo);
+  };
 
   return (
     <div className={classes.root}>
@@ -28,9 +34,9 @@ export default function Header({authService, userOnLogin}) {
         <Toolbar>
           <Menu authService={authService} userOnLogin={userOnLogin} />
           <Title />
-          <LocationNameBtn />
+          <LocationNameBtn  townName={`${locationInfo.cityName} ${locationInfo.townName}`} />
           {userOnLogin&& <MyPlaceBtn />}
-          <MyLocationBtn />
+          <MyLocationBtn setLocationInfoFromMap={setLocationInfoFromMap} />
         </Toolbar>
       </AppBar>
     </div>

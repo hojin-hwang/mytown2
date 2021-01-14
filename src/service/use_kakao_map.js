@@ -1,24 +1,35 @@
 /*global kakao*/
-class UseKakoMap {
+
+import React, { useEffect } from 'react';
+
+const UseKakoMap = ({position, getLocationInfo}) => {
+    const geocoder = new kakao.maps.services.Geocoder();
+        
+    const updateTownInfo = function(currntTownInfo){
+        getLocationInfo(currntTownInfo);
+    };   
     
-    geocoder = new kakao.maps.services.Geocoder();
-    
-    getTownName(position)
+    useEffect(()=>{
+        position && getTownName(position);
+    },[position]);
+
+
+
+    const searchAddrFromCoords = function(lng, lat, callback) {
+        // 좌표로 행정동 주소 정보를 요청합니다
+        geocoder.coord2RegionCode(lng, lat, callback);         
+    }
+
+    const getTownName = function(position) 
     {
         const lat = position.latitude;
         const lng = position.longitude;
-        let townInfo = {};
-        const mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-        mapOption = {
-            center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
-            level: 1 // 지도의 확대 레벨
-        };  
-        //const map = new kakao.maps.Map(mapContainer, mapOption); 
-        this.searchAddrFromCoords(lng, lat, function(results, status) {
+        
+        searchAddrFromCoords(lng, lat, function(results, status) {
             let city_name = "";
             let town_name = "";
             let code = "";
-            results.map((result)=>{
+            results.map((result) =>{
                 if(result.region_type === 'B')
                 {
                     const address_name =  result.address_name.split(' ');
@@ -26,33 +37,27 @@ class UseKakoMap {
                     town_name = address_name[2];
                     code = result.code;
                 }
+                return result;                
             });
-            const townInfo = {
+
+            const current_town_info = {
                 code : code,
                 cityName : city_name,
                 townName : town_name
             }
+
+           updateTownInfo(current_town_info);
         });
-        
-        return townInfo;
-    }
-    
-    test(position){ console.log(position);}
+    };
 
-    searchAddrFromCoords(lng, lat, callback) {
-        // 좌표로 행정동 주소 정보를 요청합니다
-        this.geocoder.coord2RegionCode(lng, lat, callback);         
-    }
-    
-    searchDetailAddrFromCoords(lng, lat, callback) {
-        // 좌표로 법정동 상세 주소 정보를 요청합니다
-        this.geocoder.coord2Address(lng, lat, callback);
-    }
-    
+    return(
+        <>
+        </>
+    );
+}
 
-  }
-  
-  export default UseKakoMap;
+export default UseKakoMap;
+
 
 
 
