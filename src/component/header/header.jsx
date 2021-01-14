@@ -19,17 +19,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Header() {
+export default function Header({authService, userOnLogin}) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Menu />
+          <Menu authService={authService} userOnLogin={userOnLogin} />
           <Title />
           <LocationNameBtn />
-          <MyPlaceBtn />
+          {userOnLogin&& <MyPlaceBtn />}
           <MyLocationBtn />
         </Toolbar>
       </AppBar>

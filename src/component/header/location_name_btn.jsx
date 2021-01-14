@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     locationName: {
-      
+      color : "inherit",
     },
 }));
 
@@ -12,7 +12,7 @@ const LocationNameBtn = (props) => {
     const classes = useStyles();
 
     return(
-        <Button color="inherit">Login</Button>
+        <Button className={classes.locationName} >Login</Button>
     );
 }
 export default LocationNameBtn;

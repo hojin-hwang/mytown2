@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -13,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import KakaoMap from './kakao_map';
+import ShopMap from './shop_map';
 import ShopRating from './shop_rating';
 
 
@@ -23,7 +23,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '16px',
   },
   media: {
-    height: 0,
+    minHeight: '180px',
+    maxHeight: '480px',
+    width : '100%',
     paddingTop: '56.25%', // 16:9
   },
   signMedia:{
@@ -54,36 +56,66 @@ const useStyles = makeStyles((theme) => ({
   map:{
     width : '100%',
     maxHeight : '350px',
-  }
-  
+  },
+  favorite : { color : 'pink'},
+  clip : { color : '#1ca23f'},
 }));
 
-export default function ShopCard() {
+export default function EvnetCard({eventData, closeOtherExpand, expanedExeceptId}) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const [favorited, setFavorite] = useState(eventData.shop.favorite? true:false);
+  const [cliped, setClip] = useState(eventData.clip? true:false);
+  const geoData = {id:eventData.shop.id, lat:eventData.shop.lat, lng:eventData.shop.lng};
+  
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+    /***펼친다면 현재 이벤트 아이디를 shopBox에 보낸다  */
+    if(!expanded){
+      closeOtherExpand(eventData.id);
+    }
   };
+
+  const handleFavoriteClick = () => {
+    setFavorite(!favorited);
+    console.log(eventData.shop.id);
+  };
+
+  const handleClipClick = () => {
+    setClip(!cliped);
+    console.log(eventData.id);
+  };
+
+  useEffect(()=>{
+    /** shopbox에서 전달한 현재 펼침 가게의 아이디와 이 가계 아이디를 비교하여 
+     *  펼쳐져있는데 아이디가 다르다면 접는다.
+    */
+    if(expanded && expanedExeceptId !== eventData.id){
+      setExpanded(false);
+    }
+  
+  }, [expanedExeceptId, expanded, eventData.id]);
+
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="shop-profile" className={classes.avatar} src="https://blog.kakaocdn.net/dn/R3xKL/btqv7glmyDo/ezkHvlMkdNsrgfQYRKBZP1/img.png" />
+          <Avatar aria-label="shop-profile" className={classes.avatar} src={eventData.shop.shopSign} />
         }
         action={
-          <IconButton aria-label="pin">
+          <IconButton aria-label="pin" onClick={handleClipClick} className={ clsx({[classes.clip]:cliped}) } >
             <AttachFileIcon />
           </IconButton>
         }
         classes={{title: classes.headerTitle}}
 
-        title="Shrimp and Chorizoz"
+        title={eventData.shop.shopName}
       />
       <CardMedia
         className={classes.media}
-        image="https://cdn.inflearn.com/wp-content/uploads/ethereum3_programmers-460x299.jpg"
+        image={eventData.eventImage}
         title="shop event"
       />
       <CardContent>
@@ -93,7 +125,11 @@ export default function ShopCard() {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton className={clsx({
+            [classes.favorite]: favorited,
+          })} 
+          onClick={handleFavoriteClick}
+          aria-label="add to favorites" >
           <FavoriteIcon />
         </IconButton>
         
@@ -117,7 +153,7 @@ export default function ShopCard() {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardMedia
           className={classes.signMedia}
-          image="https://www.ilovepc.co.kr/news/photo/201912/32681_60313_3113.jpg"
+          image = {eventData.shop.shopSign}
           title="shop sign"
         />
 
@@ -128,7 +164,7 @@ export default function ShopCard() {
             minutes.
           </Typography>
           
-           <KakaoMap />
+           <ShopMap geoData = {geoData}/>
            <ShopRating />
         </CardContent>
       </Collapse>

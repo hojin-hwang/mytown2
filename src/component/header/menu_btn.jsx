@@ -13,6 +13,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import CloseIcon from '@material-ui/icons/Close';
+import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import LoginForm from './login_form';
 
 
@@ -33,18 +34,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Menu = (props) => {
+const Menu = ({authService, userOnLogin}) => {
     const classes = useStyles();
-
     const [state, setState] = useState({
     left: false,
     });
+
+    
 
 const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
         return;
     }
     setState({ ...state, [anchor]: open });
+};
+
+const onLogOut = event => {
+  authService.logout();
 };
 
 const list = (anchor) => (
@@ -61,7 +67,7 @@ const list = (anchor) => (
         </ListItem>
       </List>
       
-      <LoginForm />
+      {!userOnLogin&& <LoginForm authService={authService}/>}
      
       <List onClick={toggleDrawer(anchor, false)}  onKeyDown={toggleDrawer(anchor, false)}>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -79,6 +85,13 @@ const list = (anchor) => (
             <ListItemText primary={text} />
           </ListItem>
         ))}
+
+        {userOnLogin&& 
+          <ListItem button key="logout" onClick={onLogOut} >
+              <ListItemIcon> <MeetingRoomIcon /></ListItemIcon>
+              <ListItemText primary="Log out" />
+          </ListItem>
+        }
       </List>
      
     </div>

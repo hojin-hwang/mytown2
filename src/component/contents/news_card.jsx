@@ -34,27 +34,27 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function NewsCard() {
+export default function NewsCard({newsData}) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
       <CardHeader
         className={classes.header}
-        action={<Typography className={classes.newsDate}>2020.01.12</Typography>}
-        subheader = "Korean Times"
+        action={<Typography className={classes.newsDate}>{newsData.date}</Typography>}
+        subheader = {newsData.company}
       />
       <Typography className={classes.newsTitle}>
-      Shrimp and Chorizo Paella
+      {newsData.title}
       </Typography>
       <CardMedia
         className={classes.media}
-        image="https://cdn.inflearn.com/wp-content/uploads/blockchain.jpg"
+        image={newsData.image}
         title="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        [에너지경제신문 여헌우 기자] 포스코는 호주 원료공급사인 FMG(Fortescue Metal Group)와 신재생에너지를 활용한 그린수소 사업에서 상호 협력키로 했다고 15일 밝혔..
+        {newsData.article}
         </Typography>
       </CardContent>
     </Card>

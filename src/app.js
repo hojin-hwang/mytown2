@@ -4,15 +4,22 @@ import { unstable_createMuiStrictModeTheme } from '@material-ui/core/styles';
 import Header from './component/header/header';
 import ActionBar from './component/actionbar/action_bar';
 import NewsBox from './component/contents/news_box';
-import ShopBox from './component/contents/shop_box';
-import { useState } from 'react';
+import EventBox from './component/contents/event_box';
+import { useState , useEffect} from 'react';
 
 const theme = unstable_createMuiStrictModeTheme();
 
-function App() {
+function App({authService}) {
   const TOWN_NEWS_ACTION = false;
   const TOWN_SHOP_ACTION = true;
   const [action, setAction] = useState(TOWN_NEWS_ACTION);
+  const [userOnLogin, setUserOnLogin] = useState(false);
+
+  useEffect(()=>{
+    authService.onAuthChange(user =>{
+        user? setUserOnLogin(true): setUserOnLogin(false);
+    });
+  });
 
   const goSite = (newValue) => {
     if(!newValue){setAction(TOWN_NEWS_ACTION);}//동네소식
@@ -21,12 +28,12 @@ function App() {
 
   return (
     <ThemeProvider theme = {theme}>
-      <Header />
-      <ActionBar action={action} onClick={goSite}/>
+      <Header authService={authService} userOnLogin={userOnLogin}/>
+      <ActionBar action={action} onClick={goSite} userOnLogin={userOnLogin}/>
       
       {!action &&  <NewsBox />}
       
-      {action && <ShopBox /> }
+      {action && <EventBox userOnLogin={userOnLogin}/> }
       
     </ThemeProvider>  
   );
