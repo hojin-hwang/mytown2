@@ -14,7 +14,10 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import CloseIcon from '@material-ui/icons/Close';
 import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
+import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
+import StorefrontIcon from '@material-ui/icons/Storefront';
 import LoginForm from './login_form';
+import ShopForm from '../dialog/shop_form';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,13 +37,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Menu = ({authService, userOnLogin}) => {
+const Menu = ({authService, userOnLogin, setFormOpen}) => {
     const classes = useStyles();
     const [state, setState] = useState({
     left: false,
     });
-
-    
 
 const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -51,6 +52,16 @@ const toggleDrawer = (anchor, open) => (event) => {
 
 const onLogOut = event => {
   authService.logout();
+};
+
+const newEventForm = event => {
+  setState({ ...state, ['left']: false });
+  setFormOpen('event');
+};
+
+const newShopForm = event => {
+  setState({ ...state, ['left']: false });
+  setFormOpen('shop');
 };
 
 const list = (anchor) => (
@@ -86,6 +97,17 @@ const list = (anchor) => (
           </ListItem>
         ))}
 
+        {/* New Shop Making or Modify */}
+        {userOnLogin&&<ListItem button onClick={newShopForm} >
+              <ListItemIcon> <StorefrontIcon /></ListItemIcon>
+              <ListItemText primary="New Shop" />
+        </ListItem>}
+
+        {userOnLogin&& <ListItem button onClick={newEventForm} >
+              <ListItemIcon> <CardGiftcardIcon /></ListItemIcon>
+              <ListItemText primary="New Event" />
+        </ListItem>}
+
         {userOnLogin&& 
           <ListItem button key="logout" onClick={onLogOut} >
               <ListItemIcon> <MeetingRoomIcon /></ListItemIcon>
@@ -93,7 +115,6 @@ const list = (anchor) => (
           </ListItem>
         }
       </List>
-     
     </div>
 );
 

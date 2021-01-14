@@ -5,6 +5,7 @@ import React, { useEffect } from 'react';
 const UseKakoMap = ({position, getLocationInfo}) => {
     const geocoder = new kakao.maps.services.Geocoder();
         
+    //좌표정보, 지역코드를 전달한다.
     const updateTownInfo = function(currntTownInfo){
         getLocationInfo(currntTownInfo);
     };   
