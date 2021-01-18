@@ -20,14 +20,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const ShopForm = ({openShop, authService, setFormClose}) => {
-    console.log(openShop);
+const ShopForm = ({locationInfo, openShop, authService, setFormClose}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const shop_data = {
+        id : 0,
+        shopName : '',
+        lat : '',
+        lng :  '',
+        shopSign : '',
+    }
+
+    if (shop_data.id === 0)
+    { 
+        shop_data.lat = locationInfo.lat;
+        shop_data.lng = locationInfo.lng;
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -68,7 +82,7 @@ const ShopForm = ({openShop, authService, setFormClose}) => {
           </Toolbar>
         </AppBar>
 
-        <StepForm />
+            <StepForm shop_data = {shop_data}/>
 
       </Dialog>
     );

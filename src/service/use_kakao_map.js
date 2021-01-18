@@ -44,7 +44,9 @@ const UseKakoMap = ({position, getLocationInfo}) => {
             const current_town_info = {
                 code : code,
                 cityName : city_name,
-                townName : town_name
+                townName: town_name,
+                lat: lat,
+                lng : lng,
             }
 
            updateTownInfo(current_town_info);
@@ -58,7 +60,3 @@ const UseKakoMap = ({position, getLocationInfo}) => {
 }
 
 export default UseKakoMap;
-
-
-
-

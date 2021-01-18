@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import ShopMap from '../contents/shop_map';
 //import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,18 +24,16 @@ const useStyles = makeStyles((theme) => ({
     margin: {
         margin: theme.spacing(1),
     },
-    img: {
-        height: 255,
-        maxWidth: 400,
-        overflow: 'hidden',
-        display: 'block',
-        width: '100%',
+    map: {
+        marginTop: "1.5em",
     },
 }));
 
-export default function ShopEdit() {
+        
+export default function ShopEdit({shop_data}) {
   const classes = useStyles();
-
+  const geoData = { id: shop_data.id, lat: shop_data.lat, lng: shop_data.lng };
+  
   return (
     <div>
         <form className={classes.root} noValidate autoComplete="off">
@@ -42,11 +41,10 @@ export default function ShopEdit() {
             <TextField className={classes.address} label="Address" defaultValue="지도에서 선택학세요" InputProps={{readOnly: true,}} />
             <TextField className={classes.town} label="Town" defaultValue="동네" InputProps={{readOnly: true,}} />
             </div>       
-                <img
-                    className={classes.img}
-                    src="https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60"
-                    alt="image"
-                />
+
+            <div className={classes.map} >
+                  <ShopMap geoData={geoData} />
+            </div>        
           </form>  
     </div>
   );

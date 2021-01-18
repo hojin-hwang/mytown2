@@ -24,7 +24,7 @@ export default function Header({authService, userOnLogin}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
   const [shopOpen, setShopOpen] = useState(false);
-
+   
   const setLocationInfoFromMap = function(locationInfo)
   {   
       setLocationInfo(locationInfo);
@@ -56,7 +56,7 @@ export default function Header({authService, userOnLogin}) {
         </Toolbar>
       </AppBar>
       <div>
-        <ShopForm openShop={shopOpen} authService={authService} setFormClose={setFormClose}/>
+              <ShopForm locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose}/>
       </div>
     </div>
   );

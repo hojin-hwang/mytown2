@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function StepForm() {
+export default function StepForm({shop_data}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -57,7 +57,7 @@ export default function StepForm() {
   return (
     <div className={classes.root}>
 
-      <ShopEdit />
+      <ShopEdit shop_data={shop_data}/>
 
       <MobileStepper
         className = {classes.stepper}
