@@ -17,8 +17,6 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import LoginForm from './login_form';
-import ShopForm from '../dialog/shop_form';
-
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
