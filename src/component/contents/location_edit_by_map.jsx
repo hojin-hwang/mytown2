@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1),
         justifyContent: "space-between",
     },
-    address : {width : "58%"},
-    town : {width : "40%"},
+    address : {width : "68%"},
+    town : {width : "30%"},
     margin: {
         margin: theme.spacing(1),
     },
@@ -26,19 +26,19 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default React.memo(function LocationEditByMap({geoData, setLocationData}){
-    
+/*export default LocationEditByMap = React.memo(function ({shop_data}){*/
+const LocationEditByMap =  React.memo(({shop_data}) => {   
     const classes = useStyles();
-    const mapId = `shopmap_${geoData.id}`;
+    const mapId = `shopmap_${shop_data.id}`;
     const [locationInfo, setLocationInfo] = useState({address:'', townName:''});
 
     const getTown = (location_info) =>
     {
         setLocationInfo(location_info);
-        //setLocationData(location_info);
     }
 
     useEffect(() => {
+        const geoData = { id: shop_data.id, lat: shop_data.lat, lng: shop_data.lng };
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
         const container = document.getElementById(mapId); //지도를 담을 영역의 DOM 레퍼런스
@@ -77,7 +77,7 @@ export default React.memo(function LocationEditByMap({geoData, setLocationData})
 
 
         map.setDraggable(true); 
-      }, [geoData,mapId]);
+      }, [shop_data,mapId]);
 
     return(
         <div>
@@ -90,3 +90,4 @@ export default React.memo(function LocationEditByMap({geoData, setLocationData})
     );
 
 });
+export default LocationEditByMap;

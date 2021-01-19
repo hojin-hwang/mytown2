@@ -31,10 +31,13 @@ const ShopForm = ({locationInfo, openShop, authService, setFormClose}) => {
     const [open, setOpen] = useState(false);
     const shop_data = {
         id : 0,
-        shopName : '',
+        shopName : '이름 있어유',
         lat : '',
         lng :  '',
-        shopSign : '',
+        shopSign: '',
+        shopType: '',
+        shopTel: '',
+        shopDesc:'',
     }
 
     if (shop_data.id === 0)

@@ -1,13 +1,17 @@
 import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import ShopEdit from './shop_edit';
+import LocationEditByMap from '../contents/location_edit_by_map';
+import ShopInfoEdit from './shop_info_edit';
 
 const useStyles = makeStyles((theme) => ({
-  
+  root : {
+        padding : "1em",
+  },
   default : {
       display:"none",
   },
@@ -20,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     right: 0,
     left: 0,
-  }
+  },
+  hide: { display: 'none',}
 }));
 
 export default function StepForm({shop_data}) {
@@ -28,10 +33,10 @@ export default function StepForm({shop_data}) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [firstStep, setFirstStep] = React.useState(true);
-  const [secondStep, setSecondStep] = React.useState(0);
-  const [thirdStep, setThirdStep] = React.useState(0);
-  const [fourthStep, setFourthStep] = React.useState(0);
-  const [fifthStep, setFifthStep] = React.useState(0);
+  const [secondStep, setSecondStep] = React.useState(false);
+  const [thirdStep, setThirdStep] = React.useState(false);
+  const [fourthStep, setFourthStep] = React.useState(false);
+  const [fifthStep, setFifthStep] = React.useState(false);
 
   const maxSteps = 5;
 
@@ -55,9 +60,15 @@ export default function StepForm({shop_data}) {
   }
 
   return (
-    <div className={classes.root}>
-
-      <ShopEdit shop_data={shop_data}/>
+    <div >
+          <form className={classes.root} noValidate autoComplete="off">
+              <div className={clsx({ [classes.hide]: !firstStep })}>
+                  <LocationEditByMap  shop_data={shop_data} />
+              </div> 
+              <div className={clsx({ [classes.hide]: !secondStep })}>
+                  <ShopInfoEdit shop_data={shop_data} />
+              </div> 
+        </form>    
 
       <MobileStepper
         className = {classes.stepper}
