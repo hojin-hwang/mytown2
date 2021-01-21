@@ -36,10 +36,8 @@ export default function StepForm({shop_data, FileInput}) {
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
-  const [fourthStep, setFourthStep] = React.useState(false);
-  const [fifthStep, setFifthStep] = React.useState(false);
 
-  const maxSteps = 5;
+  const maxSteps = 3;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -56,13 +54,11 @@ export default function StepForm({shop_data, FileInput}) {
     (activeStep === 0) ? setFirstStep(true)  : setFirstStep(false);
     (activeStep === 1) ? setSecondStep(true)  : setSecondStep(false);
     (activeStep === 2) ? setThirdStep(true)  : setThirdStep(false);
-    (activeStep === 3) ? setFourthStep(true)  : setFourthStep(false);
-    (activeStep === 4) ? setFifthStep(true)  : setFifthStep(false);
   }
 
   return (
     <div >
-          <form className={classes.root} noValidate autoComplete="off">
+          <form className={classes.root} noValidate autoComplete="off" >
               <div className={clsx({ [classes.hide]: !firstStep })}>
                   <LocationEditByMap  shop_data={shop_data} />
               </div> 
@@ -72,7 +68,7 @@ export default function StepForm({shop_data, FileInput}) {
               <div className={clsx({ [classes.hide]: !thirdStep })}>
                   <ShopSignEdit shop_data={shop_data} FileInput={FileInput} />
               </div>
-        </form>    
+          </form>    
 
       <MobileStepper
         className = {classes.stepper}

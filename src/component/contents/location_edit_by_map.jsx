@@ -82,7 +82,9 @@ const LocationEditByMap =  React.memo(({shop_data}) => {
     return(
         <div>
             <div className={classes.postionInput}>
-            <TextField className={classes.address} label="Address" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} value={locationInfo.address}/>
+            <TextField className={classes.address} label="Address" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} value={locationInfo.address} InputLabelProps={{
+            shrink: true,
+          }}/>
             <TextField className={classes.town} label="Town" placeholder="동네" InputProps={{readOnly: true,}} value={locationInfo.townName}/>
             </div>
             <div className={classes.map} id={mapId}></div>

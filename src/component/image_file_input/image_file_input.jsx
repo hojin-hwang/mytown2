@@ -1,7 +1,28 @@
 import React, { memo, useRef, useState } from 'react';
-import styles from './image_file_input.module.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-const ImageFileInput = memo(({imageUploader, name, onFileChange}) => {
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+            margin: theme.spacing(1),
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+      },
+    },
+    input: {
+      display: 'none',
+    },
+    button: {
+        margin: theme.spacing(1),
+    },
+}));
+  
+const ImageFileInput = memo(({ imageUploader, name, onFileChange }) => {
+    const classes = useStyles();
+
     const [loading, setLoading] = useState(false);
     const inputRef = useRef();
     const onButtonClick = (event) => {
@@ -20,18 +41,20 @@ const ImageFileInput = memo(({imageUploader, name, onFileChange}) => {
     }
 
     return ( 
-        <div className={styles.container}>
-            <input ref={inputRef} className={styles.input} type="file" accept="image/*" name="file" 
+        <div className={classes.root}>
+            
+            {/*<input ref={inputRef} className={styles.input} type="file" accept="image/*" name="file" 
                 onChange={onChange}
-            />
-            {!loading && 
-                <button className={`${styles.button} ${ name? styles.pink : styles.grey }`} onClick={onButtonClick}>
-                    새로운 가게 사진을 선택하세요
-                </button>
+            />*/}
+            <input accept="image/*" ref={inputRef} onChange={onChange} className={classes.input} id="contained-button-file"
+                multiple type="file" />
+            {!loading &&
+                <label htmlFor="contained-button-file">
+                    <Button variant="contained" color="default" className={classes.button} startIcon={<CloudUploadIcon />}
+                    onClick={onButtonClick}
+                    > 새로운 가게 이미지를 선택하세요</Button>
+                </label>
             }
-            
-            {loading && <div className={styles.loading}></div>}
-            
         </div>
     );
 });

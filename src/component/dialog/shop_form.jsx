@@ -12,7 +12,8 @@ import StepForm from './step_form';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
-      position: 'relative',
+        position: 'relative',
+        backgroundColor:"#306d33",
     },
     title: {
       marginLeft: theme.spacing(2),
@@ -79,7 +80,7 @@ const ShopForm = ({locationInfo, openShop, authService, setFormClose, FileInput}
             <Typography variant="h6" className={classes.title}>
               Shop Info
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
+            <Button color="inherit" >
               save
             </Button>
           </Toolbar>
