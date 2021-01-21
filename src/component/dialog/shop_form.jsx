@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const ShopForm = ({locationInfo, openShop, authService, setFormClose}) => {
+const ShopForm = ({locationInfo, openShop, authService, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const shop_data = {
@@ -34,7 +34,7 @@ const ShopForm = ({locationInfo, openShop, authService, setFormClose}) => {
         shopName : '이름 있어유',
         lat : '',
         lng :  '',
-        shopSign: '',
+        shopSign: 'https://www.keepuble.com/upload/1606282415_blob.jpg',
         shopType: '',
         shopTel: '',
         shopDesc:'',
@@ -85,7 +85,7 @@ const ShopForm = ({locationInfo, openShop, authService, setFormClose}) => {
           </Toolbar>
         </AppBar>
 
-            <StepForm shop_data = {shop_data}/>
+            <StepForm shop_data = {shop_data} FileInput={FileInput}/>
 
       </Dialog>
     );

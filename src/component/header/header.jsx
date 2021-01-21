@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Header({authService, userOnLogin}) {
+export default function Header({authService, userOnLogin, FileInput}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
   const [shopOpen, setShopOpen] = useState(false);
@@ -48,7 +48,7 @@ export default function Header({authService, userOnLogin}) {
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Menu authService={authService} userOnLogin={userOnLogin} setFormOpen={setFormOpen} />
+          <Menu authService={authService} userOnLogin={userOnLogin} setFormOpen={setFormOpen}  />
           <Title />
           <LocationNameBtn  townName={`${locationInfo.cityName} ${locationInfo.townName}`} />
           {userOnLogin&& <MyPlaceBtn />}
@@ -56,7 +56,7 @@ export default function Header({authService, userOnLogin}) {
         </Toolbar>
       </AppBar>
       <div>
-              <ShopForm locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose}/>
+              <ShopForm locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LocationEditByMap from '../contents/location_edit_by_map';
 import ShopInfoEdit from './shop_info_edit';
+import ShopSignEdit from './shop_sign_edit';
 
 const useStyles = makeStyles((theme) => ({
   root : {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function StepForm({shop_data}) {
+export default function StepForm({shop_data, FileInput}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -68,6 +69,9 @@ export default function StepForm({shop_data}) {
               <div className={clsx({ [classes.hide]: !secondStep })}>
                   <ShopInfoEdit shop_data={shop_data} />
               </div> 
+              <div className={clsx({ [classes.hide]: !thirdStep })}>
+                  <ShopSignEdit shop_data={shop_data} FileInput={FileInput} />
+              </div>
         </form>    
 
       <MobileStepper

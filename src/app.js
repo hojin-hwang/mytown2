@@ -9,7 +9,7 @@ import { useState , useEffect} from 'react';
 
 const theme = unstable_createMuiStrictModeTheme();
 
-function App({authService}) {
+function App({authService,FileInput }) {
   const TOWN_NEWS_ACTION = false;
   const TOWN_SHOP_ACTION = true;
   const [action, setAction] = useState(TOWN_NEWS_ACTION);
@@ -28,7 +28,7 @@ function App({authService}) {
 
   return (
     <ThemeProvider theme = {theme}>
-      <Header authService={authService} userOnLogin={userOnLogin}/>
+      <Header authService={authService} userOnLogin={userOnLogin} FileInput={FileInput}/>
       <ActionBar action={action} onClick={goSite} userOnLogin={userOnLogin}/>
       
       {!action &&  <NewsBox />}

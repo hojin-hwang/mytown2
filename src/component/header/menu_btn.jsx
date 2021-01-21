@@ -96,7 +96,7 @@ const list = (anchor) => (
         ))}
 
         {/* New Shop Making or Modify */}
-        {userOnLogin&&<ListItem button onClick={newShopForm} >
+        {userOnLogin&&<ListItem button onClick={newShopForm}  >
               <ListItemIcon> <StorefrontIcon /></ListItemIcon>
               <ListItemText primary="New Shop" />
         </ListItem>}
