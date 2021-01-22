@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -8,6 +8,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LocationEditByMap from '../contents/location_edit_by_map';
 import ShopInfoEdit from './shop_info_edit';
 import ShopSignEdit from './shop_sign_edit';
+import validate from '../../service/validate'
+import useForm from '../../service/use_form';
 
 const useStyles = makeStyles((theme) => ({
   root : {
@@ -37,6 +39,27 @@ export default function StepForm({shop_data, FileInput}) {
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
 
+
+  const { values, errors, submitting, handleChange, handleSubmit } = useForm({
+    initialValues: {
+      user_id : shop_data.user_id,  
+      id : shop_data.id, 
+      shop_name : shop_data.shop_name, 
+      lat : shop_data.lat, 
+      lng :  shop_data.lng, 
+      city_name : shop_data.city_name, 
+      town_name:shop_data.town_name, 
+      address:shop_data.address, 
+      shop_sign: shop_data.shop_sign, 
+      shop_tel: shop_data.shop_tel, 
+      shop_desc : shop_data.shop_desc },
+    onSubmit: (values) => {
+      //alert(JSON.stringify(values, null, 2))
+    },
+    validate,
+  })
+
+
   const maxSteps = 3;
 
   const handleNext = () => {
@@ -58,15 +81,15 @@ export default function StepForm({shop_data, FileInput}) {
 
   return (
     <div >
-          <form className={classes.root} noValidate autoComplete="off" >
+          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  shop_data={shop_data} />
+                  <LocationEditByMap  shop_data={shop_data} handleChange={handleChange}/>
               </div> 
-              <div className={clsx({ [classes.hide]: !secondStep })}>
-                  <ShopInfoEdit shop_data={shop_data} />
+              <div className={clsx({ [classes.hide]: !secondStep })} >
+                  <ShopInfoEdit shop_data={shop_data} handleChange={handleChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !thirdStep })}>
-                  <ShopSignEdit shop_data={shop_data} FileInput={FileInput} />
+                  <ShopSignEdit shop_data={shop_data} FileInput={FileInput} handleChange={handleChange}/>
               </div>
           </form>    
 

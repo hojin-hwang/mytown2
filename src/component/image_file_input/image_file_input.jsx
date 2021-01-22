@@ -11,6 +11,8 @@ const useStyles = makeStyles((theme) => ({
             display: "flex",
             justifyContent: "center",
       },
+      display: "flex",
+      width: "100%"
     },
     input: {
       display: 'none',

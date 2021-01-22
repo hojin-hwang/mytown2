@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -27,20 +26,24 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const ShopForm = ({locationInfo, openShop, authService, setFormClose, FileInput}) => {
+const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const shop_data = {
+        user_id : userData? userData.uid : '0',
         id : 0,
-        shopName : '이름 있어유',
+        shop_name : '',
         lat : '',
         lng :  '',
-        shopSign: 'https://www.keepuble.com/upload/1606282415_blob.jpg',
-        shopType: '',
-        shopTel: '',
-        shopDesc:'',
+        city_name:'',
+        town_name:'',
+        shop_sign: '',
+        shop_type: '',
+        shop_tel: '',
+        shop_desc:'',
+        address:'',
     }
-
+    
     if (shop_data.id === 0)
     { 
         shop_data.lat = locationInfo.lat;
@@ -55,7 +58,6 @@ const ShopForm = ({locationInfo, openShop, authService, setFormClose, FileInput}
     useEffect(() =>{
         authService.onAuthChange(user =>{
             if(!user){
-                console.log(user.uid);
                 setOpen(false);
             }
             else
@@ -80,9 +82,6 @@ const ShopForm = ({locationInfo, openShop, authService, setFormClose, FileInput}
             <Typography variant="h6" className={classes.title}>
               Shop Info
             </Typography>
-            <Button color="inherit" >
-              save
-            </Button>
           </Toolbar>
         </AppBar>
 

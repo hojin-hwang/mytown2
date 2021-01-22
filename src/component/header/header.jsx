@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,6 +24,7 @@ export default function Header({authService, userOnLogin, FileInput}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
   const [shopOpen, setShopOpen] = useState(false);
+  const [userData, setUserData] = useState();
    
   const setLocationInfoFromMap = function(locationInfo)
   {   
@@ -44,6 +45,14 @@ export default function Header({authService, userOnLogin, FileInput}) {
     } 
   };
 
+  useEffect(() =>{
+    authService.onAuthChange(user =>{
+        if(user){
+          setUserData(user);
+        }
+    })
+},[userData]);
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
@@ -56,7 +65,7 @@ export default function Header({authService, userOnLogin, FileInput}) {
         </Toolbar>
       </AppBar>
       <div>
-              <ShopForm locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput}/>
+              <ShopForm userData={userData} locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );

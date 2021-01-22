@@ -1,7 +1,6 @@
 /* global kakao */
 import { makeStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-
 import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
@@ -27,18 +26,27 @@ const useStyles = makeStyles((theme) => ({
 
 
 /*export default LocationEditByMap = React.memo(function ({shop_data}){*/
-const LocationEditByMap =  React.memo(({shop_data}) => {   
+const LocationEditByMap =  React.memo(({shop_data, handleChange}) => {   
     const classes = useStyles();
     const mapId = `shopmap_${shop_data.id}`;
-    const [locationInfo, setLocationInfo] = useState({address:'', townName:''});
+    const [locationInfo, setLocationInfo] = useState({address:'', town_name:'', city_name:'', lat:'', lan:''});
+    
 
-    const getTown = (location_info) =>
+    const getTown = (locationInfo) =>
     {
-        setLocationInfo(location_info);
+        
+        const location_townname = {target:{name:'town_name', value:locationInfo.town_name}}
+        const location_address = {target:{name:'address', value:locationInfo.address}}
+        const location_cityname = {target:{name:'city_name', value:locationInfo.city_name}}
+        handleChange(location_townname);
+        handleChange(location_address);
+        handleChange(location_cityname);
+        
+
     }
 
     useEffect(() => {
-        const geoData = { id: shop_data.id, lat: shop_data.lat, lng: shop_data.lng };
+        const geoData = { id: shop_data.id, lat: shop_data.lat, lng: shop_data.lng, city_name:shop_data.city_name, town_name:shop_data.town_name };
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
         const container = document.getElementById(mapId); //지도를 담을 영역의 DOM 레퍼런스
@@ -66,10 +74,11 @@ const LocationEditByMap =  React.memo(({shop_data}) => {
                     {
                         lat : mouseEvent.latLng.La,
                         lan : mouseEvent.latLng.Ma,
-                        cityName : result[0].address.region_2depth_name,
-                        townName : result[0].address.region_3depth_name,
+                        city_name : result[0].address.region_2depth_name,
+                        town_name : result[0].address.region_3depth_name,
                         address : detailAddr,
                     }
+                    setLocationInfo(locationInfo);
                     getTown(locationInfo);
                 }   
             });
@@ -79,13 +88,21 @@ const LocationEditByMap =  React.memo(({shop_data}) => {
         map.setDraggable(true); 
       }, [shop_data,mapId]);
 
+      const handleChangeText = (event) => {
+
+      }
+
     return(
         <div>
             <div className={classes.postionInput}>
-            <TextField className={classes.address} label="Address" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} value={locationInfo.address} InputLabelProps={{
-            shrink: true,
-          }}/>
-            <TextField className={classes.town} label="Town" placeholder="동네" InputProps={{readOnly: true,}} value={locationInfo.townName}/>
+            <TextField name="address" className={classes.address} 
+            label="Address" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} 
+            value={locationInfo.address} InputLabelProps={{
+            shrink: true,}}/>
+
+            <TextField type="hidden" name="city_name" value={locationInfo.city_name} />
+            <TextField name="town_name"  className={classes.town} label="Town" placeholder="동네"  value={locationInfo.town_name} InputProps={{readOnly: true,}} InputLabelProps={{
+            shrink: true,}} />
             </div>
             <div className={classes.map} id={mapId}></div>
         </div>
