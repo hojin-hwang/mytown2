@@ -48,7 +48,7 @@ return (
     
     {!shop_sign && <img className={classes.signNoImg} src="/images/no_store_sign.png" alt='no_shop_sign' /> }
     {shop_sign && <img className={classes.signImg} src={shop_sign} alt='shop_sign' /> }
-    {shop_sign && <Button type="submit" className={classes.formSubmit} color="inherit" >save</Button> }
+    {!shop_sign && <Button type="submit" className={classes.formSubmit} color="inherit" >save</Button> }
 </div>
 
 );

@@ -26,21 +26,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 /*export default LocationEditByMap = React.memo(function ({shop_data}){*/
-const LocationEditByMap =  React.memo(({shop_data, handleChange}) => {   
+const LocationEditByMap =  React.memo(({shop_data, locationChagne}) => {   
     const classes = useStyles();
     const mapId = `shopmap_${shop_data.id}`;
-    const [locationInfo, setLocationInfo] = useState({address:'', town_name:'', city_name:'', lat:'', lan:''});
+    const [locationInfo, setLocationInfo] = useState({address:'', town_name:'', city_name:'', lat:'', lng:''});
     
 
-    const getTown = (locationInfo) =>
+    const getTown = async (locationInfo) =>
     {
         
-        const location_townname = {target:{name:'town_name', value:locationInfo.town_name}}
-        const location_address = {target:{name:'address', value:locationInfo.address}}
-        const location_cityname = {target:{name:'city_name', value:locationInfo.city_name}}
-        handleChange(location_townname);
-        handleChange(location_address);
-        handleChange(location_cityname);
         
 
     }
@@ -73,24 +67,20 @@ const LocationEditByMap =  React.memo(({shop_data, handleChange}) => {
                     const locationInfo = 
                     {
                         lat : mouseEvent.latLng.La,
-                        lan : mouseEvent.latLng.Ma,
+                        lng : mouseEvent.latLng.Ma,
                         city_name : result[0].address.region_2depth_name,
                         town_name : result[0].address.region_3depth_name,
                         address : detailAddr,
                     }
                     setLocationInfo(locationInfo);
-                    getTown(locationInfo);
+                    locationChagne(locationInfo);
                 }   
             });
         });
 
-
         map.setDraggable(true); 
       }, [shop_data,mapId]);
 
-      const handleChangeText = (event) => {
-
-      }
 
     return(
         <div>

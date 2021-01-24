@@ -12,14 +12,22 @@ function useForm({initialValues, onSubmit, validate}){
         console.log(`${name} : ${value}`);
     }
 
+    //지도에서 위치를 변경할때
+    const locationChagne = (data) => { 
+        setValues({
+            ...values, 'city_name': data.city_name, 'town_name': data.town_name,
+            'address': data.address, 'lat': data.lat, 'lng': data.lng
+        });
+    }
+
     //Submit
     const handleSubmit = async (event) => {
         setSubmitting(true);
         event.preventDefault();
         await new Promise((r) => {setTimeout(r,1000) /* submit process */
-            console.log(values);
             //useRepository.saveUser(data.user);
         });
+        //console.log(values)
         setErrors(validate(values));
     }
 
@@ -40,6 +48,7 @@ function useForm({initialValues, onSubmit, validate}){
         submitting,
         handleChange,
         handleSubmit,
+        locationChagne,
     }
 }
 

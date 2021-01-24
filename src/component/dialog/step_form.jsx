@@ -40,7 +40,7 @@ export default function StepForm({shop_data, FileInput}) {
   const [thirdStep, setThirdStep] = React.useState(false);
 
 
-  const { values, errors, submitting, handleChange, handleSubmit } = useForm({
+  const { values, errors, submitting, handleChange, handleSubmit, locationChagne } = useForm({
     initialValues: {
       user_id : shop_data.user_id,  
       id : shop_data.id, 
@@ -48,18 +48,18 @@ export default function StepForm({shop_data, FileInput}) {
       lat : shop_data.lat, 
       lng :  shop_data.lng, 
       city_name : shop_data.city_name, 
-      town_name:shop_data.town_name, 
-      address:shop_data.address, 
-      shop_sign: shop_data.shop_sign, 
-      shop_tel: shop_data.shop_tel, 
+      town_name : shop_data.town_name, 
+      address : shop_data.address, 
+      shop_sign : shop_data.shop_sign, 
+      shop_tel : shop_data.shop_tel, 
       shop_desc : shop_data.shop_desc },
     onSubmit: (values) => {
-      //alert(JSON.stringify(values, null, 2))
+      alert(JSON.stringify(values, null, 2))
     },
     validate,
   })
 
-
+    
   const maxSteps = 3;
 
   const handleNext = () => {
@@ -83,7 +83,7 @@ export default function StepForm({shop_data, FileInput}) {
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  shop_data={shop_data} handleChange={handleChange}/>
+                  <LocationEditByMap  shop_data={shop_data} locationChagne={locationChagne}/>
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
                   <ShopInfoEdit shop_data={shop_data} handleChange={handleChange}/>
