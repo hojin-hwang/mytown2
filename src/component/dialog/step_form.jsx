@@ -10,6 +10,9 @@ import ShopInfoEdit from './shop_info_edit';
 import ShopSignEdit from './shop_sign_edit';
 import validate from '../../service/validate'
 import useForm from '../../service/use_form';
+import UseRepository from '../../service/user_repository';
+
+const useRepository =  new UseRepository();
 
 const useStyles = makeStyles((theme) => ({
   root : {
@@ -42,7 +45,7 @@ export default function StepForm({shop_data, FileInput}) {
 
   const { values, errors, submitting, handleChange, handleSubmit, locationChagne } = useForm({
     initialValues: {
-      user_id : shop_data.user_id,  
+      uid : shop_data.uid,  
       id : shop_data.id, 
       shop_name : shop_data.shop_name, 
       lat : shop_data.lat, 
@@ -54,12 +57,12 @@ export default function StepForm({shop_data, FileInput}) {
       shop_tel : shop_data.shop_tel, 
       shop_desc : shop_data.shop_desc },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+      useRepository.saveShop(values);
     },
     validate,
   })
 
-    
+  
   const maxSteps = 3;
 
   const handleNext = () => {

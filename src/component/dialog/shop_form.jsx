@@ -30,8 +30,8 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const shop_data = {
-        user_id : userData? userData.uid : '0',
         id : 0,
+        uid : userData? userData.uid : '0',
         shop_name : '',
         lat : '',
         lng :  '',

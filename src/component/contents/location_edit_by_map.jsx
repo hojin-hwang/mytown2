@@ -31,14 +31,6 @@ const LocationEditByMap =  React.memo(({shop_data, locationChagne}) => {
     const mapId = `shopmap_${shop_data.id}`;
     const [locationInfo, setLocationInfo] = useState({address:'', town_name:'', city_name:'', lat:'', lng:''});
     
-
-    const getTown = async (locationInfo) =>
-    {
-        
-        
-
-    }
-
     useEffect(() => {
         const geoData = { id: shop_data.id, lat: shop_data.lat, lng: shop_data.lng, city_name:shop_data.city_name, town_name:shop_data.town_name };
         const marker = new kakao.maps.Marker();

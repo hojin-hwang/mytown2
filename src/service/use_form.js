@@ -24,10 +24,10 @@ function useForm({initialValues, onSubmit, validate}){
     const handleSubmit = async (event) => {
         setSubmitting(true);
         event.preventDefault();
-        await new Promise((r) => {setTimeout(r,1000) /* submit process */
+        await new Promise((r) => {setTimeout(r,1000) 
             //useRepository.saveUser(data.user);
+            
         });
-        //console.log(values)
         setErrors(validate(values));
     }
 
@@ -37,6 +37,10 @@ function useForm({initialValues, onSubmit, validate}){
             if(Object.keys(errors).length === 0)
             {
                 onSubmit(values);
+            }
+            else
+            {
+                console.log(errors)
             }
             setSubmitting(false)
         }
