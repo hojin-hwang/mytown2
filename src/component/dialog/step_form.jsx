@@ -12,7 +12,7 @@ import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
 
-const userRepository =  new UseRepository();
+const userRepository = new UseRepository();
 
 const useStyles = makeStyles((theme) => ({
   root : {
@@ -41,17 +41,16 @@ export default function StepForm({shop_data, FileInput}) {
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
-  const [shopData, setShopData] = useState(shop_data);
+   //console.log(shop_data);
 
   const { values, errors, submitting, handleChange, handleSubmit, locationChagne } = useForm({
-    initialValues: shopData,
+    initialValues: shop_data,
     onSubmit: (values) => {
       userRepository.saveShop(values);
     },
     validate,
   })
 
-  
   const maxSteps = 3;
 
   const handleNext = () => {
@@ -71,14 +70,7 @@ export default function StepForm({shop_data, FileInput}) {
     (activeStep === 2) ? setThirdStep(true)  : setThirdStep(false);
   }
 
-  useEffect(()=>{
-   
-    const stopSync = userRepository.syncShops(shop_data.uid, shop =>{
-      setShopData(shop);
-    })
-    return () => stopSync();
-
-  }, [shop_data,userRepository]);
+  
 
   return (
     <div >

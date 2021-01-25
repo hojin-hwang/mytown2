@@ -36,7 +36,8 @@ class UserRepository{
             city_name : shopData.city_name, 
             town_name : shopData.town_name, 
             address : shopData.address, 
-            shop_sign : shopData.shop_sign, 
+            shop_sign: shopData.shop_sign, 
+            shop_type : shopData.shop_type, 
             shop_tel : shopData.shop_tel, 
             shop_desc : shopData.shop_desc 
         }
