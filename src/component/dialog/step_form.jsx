@@ -75,7 +75,6 @@ export default function StepForm({shop_data, FileInput}) {
    
     const stopSync = userRepository.syncShops(shop_data.uid, shop =>{
       setShopData(shop);
-      
     })
     return () => stopSync();
 

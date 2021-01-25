@@ -32,7 +32,7 @@ function useForm({initialValues, onSubmit, validate}){
     }
 
     useEffect(() => {
-        console.log(initialValues);
+        
         if(submitting)
         {
             if(Object.keys(errors).length === 0)

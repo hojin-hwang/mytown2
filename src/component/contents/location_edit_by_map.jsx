@@ -29,17 +29,16 @@ const useStyles = makeStyles((theme) => ({
 const LocationEditByMap =  React.memo(({shop_data, locationChagne}) => {   
     const classes = useStyles();
     const mapId = `shopmap_${shop_data.id}`;
-    const [locationInfo, setLocationInfo] = useState({address:'', town_name:'', city_name:'', lat:'', lng:''});
+    const [locationInfo, setLocationInfo] = useState({address:shop_data.address, town_name:shop_data.town_name, city_name:shop_data.city_name, lat:shop_data.lat, lng:shop_data.lng});
     
     useEffect(() => {
-        const geoData = { id: shop_data.id, lat: shop_data.lat, lng: shop_data.lng, city_name:shop_data.city_name, town_name:shop_data.town_name };
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
         const container = document.getElementById(mapId); //지도를 담을 영역의 DOM 레퍼런스
         const options = { //지도를 생성할 때 필요한 기본 옵션
             draggable: true,
-            center: new kakao.maps.LatLng(geoData.lat, geoData.lng), //지도의 중심좌표.
-            level: 4 //지도의 레벨(확대, 축소 정도)
+            center: new kakao.maps.LatLng(shop_data.lat, shop_data.lng), //지도의 중심좌표.
+            level: 2 //지도의 레벨(확대, 축소 정도)
         };
         const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
         
@@ -47,7 +46,11 @@ const LocationEditByMap =  React.memo(({shop_data, locationChagne}) => {
             // 좌표로 법정동 상세 주소 정보를 요청합니다
             geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
         }
-
+        const coords = new kakao.maps.LatLng(shop_data.lat, shop_data.lng);
+        marker.setPosition(coords);
+        marker.setMap(map);
+        map.setCenter(coords);
+        
         kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
             searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {

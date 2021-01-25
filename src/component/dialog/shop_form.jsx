@@ -32,16 +32,16 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
     const shop_data = {
         id : 0,
         uid : userData? userData.uid : '0',
-        shop_name : '',
+        shop_name : 'abc',
         lat : '',
         lng :  '',
-        city_name:'',
-        town_name:'',
+        city_name:'노원구',
+        town_name:'공릉동',
         shop_sign: '',
-        shop_type: '',
-        shop_tel: '',
-        shop_desc:'',
-        address:'',
+        shop_type: '병원',
+        shop_tel: '02-1234-5678',
+        shop_desc:'열심히 삽니다',
+        address:'서울 노원구 공릉동 112',
     }
     
     if (shop_data.id === 0)
