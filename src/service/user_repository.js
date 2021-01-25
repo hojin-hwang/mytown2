@@ -1,14 +1,16 @@
 import { firebaseDataBase } from './firebase';
 
-class UseRepository{
-    /*syncCards(userId, onUpdate){
-        const ref = firebaseDataBase.ref(`${userId}/cards/`);
+class UserRepository{
+    syncShops(userId, onUpdate){
+        const ref = firebaseDataBase.ref(`/shops/${userId}`);
         ref.on('value', snapshot =>{
             const value = snapshot.val();
             value && onUpdate(value);
         });
+        
         return () => ref.off();
-    }*/
+    }
+
     /*
     removeCard(userId, card){
         firebaseDataBase.ref(`${userId}/cards/${card.id}`).remove();
@@ -45,4 +47,4 @@ class UseRepository{
     }
 }
 
-export default UseRepository;
+export default UserRepository;

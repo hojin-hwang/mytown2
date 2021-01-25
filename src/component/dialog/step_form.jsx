@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import MobileStepper from '@material-ui/core/MobileStepper';
@@ -12,7 +12,7 @@ import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
 
-const useRepository =  new UseRepository();
+const userRepository =  new UseRepository();
 
 const useStyles = makeStyles((theme) => ({
   root : {
@@ -41,23 +41,12 @@ export default function StepForm({shop_data, FileInput}) {
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
-
+  const [shopData, setShopData] = useState(shop_data);
 
   const { values, errors, submitting, handleChange, handleSubmit, locationChagne } = useForm({
-    initialValues: {
-      uid : shop_data.uid,  
-      id : shop_data.id, 
-      shop_name : shop_data.shop_name, 
-      lat : shop_data.lat, 
-      lng :  shop_data.lng, 
-      city_name : shop_data.city_name, 
-      town_name : shop_data.town_name, 
-      address : shop_data.address, 
-      shop_sign : shop_data.shop_sign, 
-      shop_tel : shop_data.shop_tel, 
-      shop_desc : shop_data.shop_desc },
+    initialValues: shopData,
     onSubmit: (values) => {
-      useRepository.saveShop(values);
+      userRepository.saveShop(values);
     },
     validate,
   })
@@ -81,6 +70,16 @@ export default function StepForm({shop_data, FileInput}) {
     (activeStep === 1) ? setSecondStep(true)  : setSecondStep(false);
     (activeStep === 2) ? setThirdStep(true)  : setThirdStep(false);
   }
+
+  useEffect(()=>{
+   
+    const stopSync = userRepository.syncShops(shop_data.uid, shop =>{
+      setShopData(shop);
+      
+    })
+    return () => stopSync();
+
+  }, [shop_data,userRepository]);
 
   return (
     <div >
