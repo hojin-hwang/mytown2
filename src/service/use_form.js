@@ -9,7 +9,6 @@ function useForm({initialValues, onSubmit, validate}){
     const handleChange = (event) => {
         const {name, value} = event.target;
         setValues({...values, [name]:value});
-        console.log(`${name} : ${value}`);
     }
 
     //지도에서 위치를 변경할때

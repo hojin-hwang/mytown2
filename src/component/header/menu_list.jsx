@@ -24,13 +24,10 @@ export default function MenuList( {drawState, closeDrawer }) {
   
   const toggleDrawers = (anchor, open) =>{
     //closeDrawer(anchor, open);
-    console.log(anchor);
-    console.log(open);
   }
 
   const test = (anchor) =>{
     closeDrawer('left', false);
-    console.log("TTT");
   }
 
   const list = (anchor) => (

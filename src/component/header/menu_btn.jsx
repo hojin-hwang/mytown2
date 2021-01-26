@@ -50,6 +50,7 @@ const toggleDrawer = (anchor, open) => (event) => {
 
 const onLogOut = event => {
   authService.logout();
+  setFormOpen('nothing');
 };
 
 const newEventForm = event => {

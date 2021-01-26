@@ -35,7 +35,6 @@ const ImageFileInput = memo(({ imageUploader, name, onFileChange }) => {
         setLoading(true);
         const uploaded = await imageUploader.upload(event.target.files[0]);
         setLoading(false);
-        //console.log(uploaded);
         onFileChange({
             name:uploaded.original_filename,
             url:uploaded.url

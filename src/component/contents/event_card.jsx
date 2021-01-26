@@ -79,12 +79,12 @@ export default function EvnetCard({eventData, closeOtherExpand, expanedExeceptId
 
   const handleFavoriteClick = () => {
     setFavorite(!favorited);
-    console.log(eventData.shop.id);
+    //console.log(eventData.shop.id);
   };
 
   const handleClipClick = () => {
     setClip(!cliped);
-    console.log(eventData.id);
+    //console.log(eventData.id);
   };
 
   useEffect(()=>{

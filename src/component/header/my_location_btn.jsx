@@ -31,7 +31,7 @@ const MyLocationBtn = ({setLocationInfoFromMap}) => {
         }
         else
         {
-            console.log("Not Available");
+            console.log("Navigator is not Available");
         }
     };
 

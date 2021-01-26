@@ -32,6 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const [hasShop, setHasShop] = useState(false);
     const defalut_shop_data = {
         id: userData ? userData.uid : '0',
         uid: userData ? userData.uid : '0',
@@ -51,19 +52,24 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
         setOpen(false);
         setFormClose('shop');
     };
-    console.log(shop_data)
+    
     useEffect(() =>{
         authService.onAuthChange(user =>{
             if(!user){
                 setOpen(false);
+                setHasShop(false);
             }
             else
             {
                 if(openShop)
                 {
                     setOpen(true);
+                    setHasShop(false);
                     const stopSync = userRepository.syncShops(user.uid, shop => {
-                        (shop && setShopData(shop)); 
+                        setHasShop(true);
+                        (shop && setShopData(shop));
+                        console.log(shop);
+                        console.log("has shop");
                     });
                     return () => stopSync();
                 }
@@ -73,7 +79,11 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
     }, [openShop, authService]);
     
     useEffect(() =>{
-        setShopData({...shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
+        (!hasShop && 
+            setShopData({...shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
+        );
+        console.log(locationInfo);
+        console.log(hasShop);
     }, [locationInfo]);
 
 

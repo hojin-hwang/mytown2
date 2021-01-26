@@ -34,7 +34,6 @@ const LoginForm = ({authService}) => {
           //.then(console.log("Success Login"));
           .then(data=>{
               console.log("Success login"); 
-              console.log(data.user); 
                 useRepository.saveUser(data.user);
             });
     };

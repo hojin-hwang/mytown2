@@ -15,7 +15,6 @@ class UseMapTest{
 
         this.geocoder.coord2RegionCode(lng, lat, function(results, status) {
             locationInfo = results.filter(result => result.region_type === 'B');
-            console.log(locationInfo);
         });
         
     }

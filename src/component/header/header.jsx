@@ -36,6 +36,10 @@ export default function Header({authService, userOnLogin, FileInput}) {
     {
       setShopOpen(true);
     } 
+    else if(form_name === 'nothing')
+    {
+      setShopOpen(false);
+    }
   };
 
   const setFormClose = function(form_name){
