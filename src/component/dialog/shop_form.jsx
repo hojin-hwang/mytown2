@@ -65,10 +65,12 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
                 {
                     setOpen(true);
                     setHasShop(false);
+                    setShopData({...shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
+
                     const stopSync = userRepository.syncShops(user.uid, shop => {
                         setHasShop(true);
                         (shop && setShopData(shop));
-                        console.log(shop);
+                        //console.log(shop);
                         console.log("has shop");
                     });
                     return () => stopSync();
@@ -76,16 +78,17 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
                 
             }
         })
-    }, [openShop, authService]);
+    }, [openShop, authService,locationInfo]);
     
-    useEffect(() =>{
+    /*useEffect(() =>{
         (!hasShop && 
             setShopData({...shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
         );
         console.log(locationInfo);
         console.log(hasShop);
     }, [locationInfo]);
-
+    */
+   
 
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>

@@ -41,7 +41,7 @@ export default function StepForm({shop_data, FileInput}) {
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
-   //console.log(shop_data);
+   console.log(shop_data);
 
   const { values, errors, submitting, handleChange, handleSubmit, locationChagne } = useForm({
     initialValues: shop_data,
