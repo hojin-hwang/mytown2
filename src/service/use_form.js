@@ -12,7 +12,7 @@ function useForm({initialValues, onSubmit, validate}){
     }
 
     //지도에서 위치를 변경할때
-    const locationChagne = (data) => { 
+    const locationChange = (data) => { 
         setValues({
             ...values, 'city_name': data.city_name, 'town_name': data.town_name,
             'address': data.address, 'lat': data.lat, 'lng': data.lng
@@ -52,7 +52,7 @@ function useForm({initialValues, onSubmit, validate}){
         submitting,
         handleChange,
         handleSubmit,
-        locationChagne,
+        locationChange,
     }
 }
 

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 root: {
@@ -31,16 +31,18 @@ textArea: {
 
 export default function ShopInfoEdit({shop_data, handleChange}) {
 
-const shopTextData = { shop_name: shop_data.shop_name, shop_type: shop_data.shop_type, shop_tel: shop_data.shop_tel,
-        shop_desc: shop_data.shop_desc
-    };
-const [shop_text_info, setShoptextInof] = useState(shopTextData);
+    const [shop_text_info, setShoptextInof] = useState({});
     
 const classes = useStyles();
 
 const handleChangeText = (event) => {
     handleChange(event);
 }
+
+useEffect(() =>{
+    setShoptextInof(shop_data);
+}, [shop_data]);
+
 
 return (
 <div className={classes.root}>
@@ -54,7 +56,7 @@ return (
         margin="normal" InputLabelProps={{ shrink: true, }} defaultValue={shop_text_info.shop_tel} onChange={handleChangeText}/>
     
     <TextField name="shop_desc"  label="가게 소개" style={{ margin:'18 8 8 8'}} placeholder="간단한 가게 설명. 100자 이내(선택)" fullWidth
-        margin="normal"  multiline rows={4} InputLabelProps={{ shrink: true, }}  defaultValue={shop_text_info.shop_desc} 
+        margin="normal"  multiline rows={4} InputLabelProps={{ shrink: true, }}  defaultValue={shop_text_info.shop_name} 
         variant="outlined" onChange={handleChangeText}/>
 </div>
 

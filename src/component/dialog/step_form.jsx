@@ -41,9 +41,8 @@ export default function StepForm({shop_data, FileInput}) {
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
-   console.log(shop_data);
 
-  const { values, errors, submitting, handleChange, handleSubmit, locationChagne } = useForm({
+  const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
     initialValues: shop_data,
     onSubmit: (values) => {
       userRepository.saveShop(values);
@@ -76,7 +75,7 @@ export default function StepForm({shop_data, FileInput}) {
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  shop_data={shop_data} locationChagne={locationChagne}/>
+                  <LocationEditByMap  shop_data={shop_data} locationChange={locationChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
                   <ShopInfoEdit shop_data={shop_data} handleChange={handleChange}/>

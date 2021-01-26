@@ -47,7 +47,7 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
         shop_desc: '',
         address: '',
     };
-    const [shop_data, setShopData] = useState({ ...defalut_shop_data });
+    const [shop_data, setShopData] = useState(defalut_shop_data);
     const handleClose = () => {
         setOpen(false);
         setFormClose('shop');
@@ -63,15 +63,29 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
             {
                 if(openShop)
                 {
+                    console.log(user.uid);
                     setOpen(true);
-                    setHasShop(false);
-                    setShopData({...shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
-
+                    setShopData({...defalut_shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
+                    console.log("init shop data");
                     const stopSync = userRepository.syncShops(user.uid, shop => {
                         setHasShop(true);
-                        (shop && setShopData(shop));
-                        //console.log(shop);
-                        console.log("has shop");
+                        (shop && setShopData({
+                            ...shop_data,
+                            id: shop.id,
+                            uid: shop.uid,
+                            shop_name: shop.shop_name,
+                            lat: shop.lat,
+                            lng: shop.lng,
+                            city_name: shop.city_name,
+                            town_name: shop.town_name,
+                            shop_sign: shop.shop_sign,
+                            shop_type: shop.shop_type,
+                            shop_tel: shop.shop_tel,
+                            shop_desc: shop.shop_desc,
+                            address: shop.address,
+                        }));
+                        console.log("This use has shop");
+                        
                     });
                     return () => stopSync();
                 }
@@ -80,16 +94,6 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
         })
     }, [openShop, authService,locationInfo]);
     
-    /*useEffect(() =>{
-        (!hasShop && 
-            setShopData({...shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
-        );
-        console.log(locationInfo);
-        console.log(hasShop);
-    }, [locationInfo]);
-    */
-   
-
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
