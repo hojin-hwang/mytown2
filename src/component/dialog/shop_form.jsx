@@ -69,7 +69,7 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
                     console.log("init shop data");
                     const stopSync = userRepository.syncShops(user.uid, shop => {
                         setHasShop(true);
-                        (shop && setShopData({
+                        /*(shop && setShopData({
                             ...shop_data,
                             id: shop.id,
                             uid: shop.uid,
@@ -83,9 +83,9 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
                             shop_tel: shop.shop_tel,
                             shop_desc: shop.shop_desc,
                             address: shop.address,
-                        }));
+                        }));*/
+                        setShopData(shop);
                         console.log("This use has shop");
-                        
                     });
                     return () => stopSync();
                 }

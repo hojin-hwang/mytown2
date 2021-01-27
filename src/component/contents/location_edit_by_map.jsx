@@ -28,7 +28,6 @@ const LocationEditByMap =  React.memo(({shop_data, locationChange}) => {
     const classes = useStyles();
     const mapId = `shopmap_${shop_data.id}`;
     const [locationInfo, setLocationInfo] = useState({address:shop_data.address, town_name:shop_data.town_name, city_name:shop_data.city_name, lat:shop_data.lat, lng:shop_data.lng});
-    console.log(shop_data);
     useEffect(() => {
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
@@ -73,6 +72,7 @@ const LocationEditByMap =  React.memo(({shop_data, locationChange}) => {
         });
 
         map.setDraggable(true); 
+        setLocationInfo(shop_data);
       }, [shop_data,mapId]);
 
 

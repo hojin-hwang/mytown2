@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +40,10 @@ const onFileChange = file =>{
     const file_name = {target:{name:'shop_sign', value:file.url}}
     handleChange(file_name);
 }
+
+useEffect(() =>{
+    setShop_sign(shop_data.shop_sign);
+}, [shop_data]);
 
 return (
 <div className={classes.root}>

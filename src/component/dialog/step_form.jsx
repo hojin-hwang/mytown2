@@ -41,6 +41,7 @@ export default function StepForm({shop_data, FileInput}) {
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
   const [thirdStep, setThirdStep] = React.useState(false);
+  const [form_value, setFormValue] = useState(shop_data);
 
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
     initialValues: shop_data,
@@ -69,19 +70,22 @@ export default function StepForm({shop_data, FileInput}) {
     (activeStep === 2) ? setThirdStep(true)  : setThirdStep(false);
   }
 
-  
+  useEffect(()=>{
+    setFormValue(values)
+    //console.log(values)
+  },[shop_data]);
 
   return (
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  shop_data={shop_data} locationChange={locationChange}/>
+                  <LocationEditByMap  shop_data={values} locationChange={locationChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
-                  <ShopInfoEdit shop_data={shop_data} handleChange={handleChange}/>
+                  <ShopInfoEdit shop_data={values} handleChange={handleChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !thirdStep })}>
-                  <ShopSignEdit shop_data={shop_data} FileInput={FileInput} handleChange={handleChange}/>
+                  <ShopSignEdit shop_data={values} FileInput={FileInput} handleChange={handleChange}/>
               </div>
           </form>    
 
