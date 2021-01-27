@@ -47,7 +47,7 @@ const LocationEditByMap =  React.memo(({shop_data, locationChange}) => {
         const coords = new kakao.maps.LatLng(shop_data.lat, shop_data.lng);
         marker.setPosition(coords);
         marker.setMap(map);
-        map.setCenter(coords);
+        //map.setCenter(coords);
        
         kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
             searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {

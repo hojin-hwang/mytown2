@@ -38,7 +38,7 @@ const [shop_text_info, setShoptextInfo] = useState(shop_data);
 const classes = useStyles();
 
 const handleChangeText = (event) => {
-    //handleChange(event);
+    handleChange(event);
 }
 
 useEffect(() =>{

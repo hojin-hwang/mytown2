@@ -70,8 +70,8 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
                     //setShopData({...defalut_shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
                     console.log("init shop data");
                     const stopSync = userRepository.syncShops(user.uid, shop => {
-                        setHasShop(true);
                         setShopData(shop);
+                        setHasShop(true);
                         console.log("This use has shop");
                     });
                     return () => stopSync();
@@ -95,8 +95,8 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
         </AppBar>
 
             {hasShop&&shop_data&& <StepForm shop_data = {shop_data} FileInput={FileInput}/>}
-            {/*!hasShop&&<StepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>*/}
-            {!hasShop&&<p>NO LOGIN</p>}
+            {!hasShop&&<StepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
+            {/*!hasShop&&<p>NO LOGIN</p>*/}
 
       </Dialog>
     );

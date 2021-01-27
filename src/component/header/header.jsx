@@ -8,6 +8,7 @@ import LocationNameBtn from './location_name_btn';
 import MyPlaceBtn from './my_place_btn';
 import MyLocationBtn from './my_location_btn';
 import ShopForm from '../dialog/shop_form';
+import EventForm from '../dialog/event_form';
 
 
 const useStyles = makeStyles({
@@ -24,6 +25,7 @@ export default function Header({authService, userOnLogin, FileInput}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
   const [shopOpen, setShopOpen] = useState(false);
+  const [eventOpen, setEventOpen] = useState(false);
   const [userData, setUserData] = useState();
    
   const setLocationInfoFromMap = function(locationInfo)
@@ -35,10 +37,15 @@ export default function Header({authService, userOnLogin, FileInput}) {
     if(form_name === 'shop')
     {
       setShopOpen(true);
-    } 
+    }
+    else if(form_name === 'event')
+    {
+      setEventOpen(true);
+    }  
     else if(form_name === 'nothing')
     {
-      setShopOpen(false);
+        setShopOpen(false);
+        setEventOpen(false);
     }
   };
 
@@ -46,7 +53,12 @@ export default function Header({authService, userOnLogin, FileInput}) {
     if(form_name === 'shop')
     {
       setShopOpen(false);
-    } 
+    }
+    else if(form_name === 'event')
+    {
+      setEventOpen(false);
+    }
+    
   };
 
   useEffect(() =>{
@@ -69,7 +81,8 @@ export default function Header({authService, userOnLogin, FileInput}) {
         </Toolbar>
       </AppBar>
       <div>
-              <ShopForm userData={userData} locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput}/>
+              <ShopForm userData={userData} locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput} />
+              <EventForm userData={userData} locationInfo={locationInfo} openEvent={eventOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );

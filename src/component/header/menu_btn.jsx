@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
@@ -17,6 +17,9 @@ import MeetingRoomIcon from '@material-ui/icons/MeetingRoom';
 import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import LoginForm from './login_form';
+import UseRepository from '../../service/user_repository';
+
+const userRepository = new UseRepository();
 
 const useStyles = makeStyles((theme) => ({
     menuButton: {
@@ -35,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
 const Menu = ({authService, userOnLogin, setFormOpen}) => {
     const classes = useStyles();
-    const [state, setState] = useState({
-    left: false,
-    });
-
+    const [state, setState] = useState({ left: false, });
+    const [hasShop, setHasShop] = useState(false);
+    const [shop_id, setShopId] = useState(null);
 const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
         return;
@@ -51,6 +54,7 @@ const toggleDrawer = (anchor, open) => (event) => {
 const onLogOut = event => {
   authService.logout();
   setFormOpen('nothing');
+  setHasShop(false);
 };
 
 const newEventForm = event => {
@@ -63,6 +67,23 @@ const newShopForm = event => {
   setFormOpen('shop');
 };
 
+    
+useEffect(() =>{
+    authService.onAuthChange(user =>{
+        if (user)
+        {
+            const stopSync = userRepository.syncShops(user.uid, shop => {
+                setShopId(shop.id);
+                setHasShop(true);
+                console.log(hasShop);
+                console.log(shop_id);
+            });
+            return () => stopSync();
+        }
+    })
+}, [authService]);  
+    
+    
 const list = (anchor) => (
     <div
       className={classes.menuList}
@@ -102,7 +123,7 @@ const list = (anchor) => (
               <ListItemText primary="New Shop" />
         </ListItem>}
 
-        {userOnLogin&& <ListItem button onClick={newEventForm} >
+        {userOnLogin&&hasShop&& <ListItem button onClick={newEventForm} >
               <ListItemIcon> <CardGiftcardIcon /></ListItemIcon>
               <ListItemText primary="New Event" />
         </ListItem>}
