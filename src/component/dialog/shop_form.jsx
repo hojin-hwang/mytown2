@@ -44,10 +44,11 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
         shop_sign: '',
         shop_type: '',
         shop_tel: '',
-        shop_desc: '',
+        shop_desc: '1',
         address: '',
     };
-    const [shop_data, setShopData] = useState(defalut_shop_data);
+    const [shop_data, setShopData] = useState();
+
     const handleClose = () => {
         setOpen(false);
         setFormClose('shop');
@@ -58,6 +59,7 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
             if(!user){
                 setOpen(false);
                 setHasShop(false);
+                console.log("No User ID");
             }
             else
             {
@@ -65,25 +67,10 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
                 {
                     console.log(user.uid);
                     setOpen(true);
-                    setShopData({...defalut_shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
+                    //setShopData({...defalut_shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
                     console.log("init shop data");
                     const stopSync = userRepository.syncShops(user.uid, shop => {
                         setHasShop(true);
-                        /*(shop && setShopData({
-                            ...shop_data,
-                            id: shop.id,
-                            uid: shop.uid,
-                            shop_name: shop.shop_name,
-                            lat: shop.lat,
-                            lng: shop.lng,
-                            city_name: shop.city_name,
-                            town_name: shop.town_name,
-                            shop_sign: shop.shop_sign,
-                            shop_type: shop.shop_type,
-                            shop_tel: shop.shop_tel,
-                            shop_desc: shop.shop_desc,
-                            address: shop.address,
-                        }));*/
                         setShopData(shop);
                         console.log("This use has shop");
                     });
@@ -107,7 +94,9 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
           </Toolbar>
         </AppBar>
 
-            <StepForm shop_data = {shop_data} FileInput={FileInput}/>
+            {hasShop&&shop_data&& <StepForm shop_data = {shop_data} FileInput={FileInput}/>}
+            {/*!hasShop&&<StepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>*/}
+            {!hasShop&&<p>NO LOGIN</p>}
 
       </Dialog>
     );
