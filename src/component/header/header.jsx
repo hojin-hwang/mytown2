@@ -9,7 +9,9 @@ import MyPlaceBtn from './my_place_btn';
 import MyLocationBtn from './my_location_btn';
 import ShopForm from '../dialog/shop_form';
 import EventForm from '../dialog/event_form';
+import UseRepository from '../../service/user_repository';
 
+const userRepository = new UseRepository();
 
 const useStyles = makeStyles({
   root: {
@@ -27,7 +29,9 @@ export default function Header({authService, userOnLogin, FileInput}) {
   const [shopOpen, setShopOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const [userData, setUserData] = useState();
-   
+  const [shop_data, setShopData] = useState();
+  const [hasShop, setHasShop] = useState(false);
+    
   const setLocationInfoFromMap = function(locationInfo)
   {   
       setLocationInfo(locationInfo);
@@ -58,13 +62,18 @@ export default function Header({authService, userOnLogin, FileInput}) {
     {
       setEventOpen(false);
     }
-    
   };
 
   useEffect(() =>{
     authService.onAuthChange(user =>{
         if(user){
-          setUserData(user);
+            setUserData(user);
+            const stopSync = userRepository.syncShops(user.uid, shop => {
+                setShopData(shop);
+                setHasShop(true);
+                console.log("This use has shop");
+            });
+            return () => stopSync();
         }
     })
 },[userData]);
@@ -81,8 +90,8 @@ export default function Header({authService, userOnLogin, FileInput}) {
         </Toolbar>
       </AppBar>
       <div>
-              <ShopForm userData={userData} locationInfo={locationInfo} openShop={shopOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput} />
-              <EventForm userData={userData} locationInfo={locationInfo} openEvent={eventOpen} authService={authService} setFormClose={setFormClose} FileInput={FileInput}/>
+              <ShopForm userData={userData} shopData={shop_data} hasShop={ hasShop } locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
+              <EventForm userData={userData} shopData={shop_data} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );

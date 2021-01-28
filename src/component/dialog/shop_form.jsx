@@ -8,9 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import StepForm from './step_form';
-import UseRepository from '../../service/user_repository';
-
-const userRepository = new UseRepository();
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -29,10 +26,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, FileInput}) => {
+const ShopForm = ({userData, shopData, hasShop, locationInfo, openShop, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const [hasShop, setHasShop] = useState(false);
+    //const [hasShop, setHasShop] = useState(false);
     const defalut_shop_data = {
         id: userData ? userData.uid : '0',
         uid: userData ? userData.uid : '0',
@@ -47,7 +44,7 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
         shop_desc: '1',
         address: '',
     };
-    const [shop_data, setShopData] = useState();
+    //const [shop_data, setShopData] = useState(shopData);
 
     const handleClose = () => {
         setOpen(false);
@@ -55,31 +52,11 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
     };
     
     useEffect(() =>{
-        authService.onAuthChange(user =>{
-            if(!user){
-                setOpen(false);
-                setHasShop(false);
-                console.log("No User ID");
-            }
-            else
-            {
-                if(openShop)
-                {
-                    console.log(user.uid);
-                    setOpen(true);
-                    //setShopData({...defalut_shop_data, 'city_name':locationInfo.cityName, 'town_name':locationInfo.townName, 'lat':locationInfo.lat, 'lng':locationInfo.lng})
-                    console.log("init shop data");
-                    const stopSync = userRepository.syncShops(user.uid, shop => {
-                        setShopData(shop);
-                        setHasShop(true);
-                        console.log("This use has shop");
-                    });
-                    return () => stopSync();
-                }
-                
-            }
-        })
-    }, [openShop, authService,locationInfo]);
+        if(openShop)
+        {
+            setOpen(true);
+        }
+    }, [openShop]);
     
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -94,7 +71,7 @@ const ShopForm = ({userData, locationInfo, openShop, authService, setFormClose, 
           </Toolbar>
         </AppBar>
 
-            {hasShop&&shop_data&& <StepForm shop_data = {shop_data} FileInput={FileInput}/>}
+            {hasShop&&shopData&& <StepForm shop_data = {shopData} FileInput={FileInput}/>}
             {!hasShop&&<StepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
             {/*!hasShop&&<p>NO LOGIN</p>*/}
 
