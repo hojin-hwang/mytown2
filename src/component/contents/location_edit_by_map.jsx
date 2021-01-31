@@ -24,17 +24,17 @@ const useStyles = makeStyles((theme) => ({
 }));;
 
 
-const LocationEditByMap =  React.memo(({shop_data, locationChange}) => {   
+const LocationEditByMap =  React.memo(({location_data, locationChange}) => {   
     const classes = useStyles();
-    const mapId = `shopmap_${shop_data.id}`;
-    const [locationInfo, setLocationInfo] = useState({address:shop_data.address, town_name:shop_data.town_name, city_name:shop_data.city_name, lat:shop_data.lat, lng:shop_data.lng});
+    const mapId = `shopmap_${location_data.id}`;
+    const [locationInfo, setLocationInfo] = useState({address:location_data.address, town_name:location_data.town_name, city_name:location_data.city_name, lat:location_data.lat, lng:location_data.lng});
     useEffect(() => {
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
         const container = document.getElementById(mapId); //지도를 담을 영역의 DOM 레퍼런스
         const options = { //지도를 생성할 때 필요한 기본 옵션
             draggable: true,
-            center: new kakao.maps.LatLng(shop_data.lat, shop_data.lng), //지도의 중심좌표.
+            center: new kakao.maps.LatLng(location_data.lat, location_data.lng), //지도의 중심좌표.
             level: 2 //지도의 레벨(확대, 축소 정도)
         };
         const map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
@@ -44,7 +44,7 @@ const LocationEditByMap =  React.memo(({shop_data, locationChange}) => {
             geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
         }
         
-        const coords = new kakao.maps.LatLng(shop_data.lat, shop_data.lng);
+        const coords = new kakao.maps.LatLng(location_data.lat, location_data.lng);
         marker.setPosition(coords);
         marker.setMap(map);
         //map.setCenter(coords);
@@ -72,8 +72,8 @@ const LocationEditByMap =  React.memo(({shop_data, locationChange}) => {
         });
 
         map.setDraggable(true); 
-        setLocationInfo(shop_data);
-      }, [shop_data,mapId]);
+        setLocationInfo(location_data);
+      }, [location_data,mapId]);
 
 
     return(

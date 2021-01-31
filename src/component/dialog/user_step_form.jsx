@@ -6,8 +6,8 @@ import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LocationEditByMap from '../contents/location_edit_by_map';
-import ShopInfoEdit from './shop_info_edit';
-import ShopSignEdit from './shop_sign_edit';
+
+
 import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
@@ -34,23 +34,22 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function ShopStepForm({shop_data, FileInput}) {
+export default function UserStepForm({user_data, locationInfo}) {
   const classes = useStyles();
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [firstStep, setFirstStep] = React.useState(true);
-  const [secondStep, setSecondStep] = React.useState(false);
-  const [thirdStep, setThirdStep] = React.useState(false);
+  const [activeStep, setActiveStep] = useState(0);
+  const [firstStep, setFirstStep] = useState(true);
+  const [secondStep, setSecondStep] = useState(false);
   
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
-    initialValues: shop_data,
+    initialValues: user_data,
     onSubmit: (values) => {
       userRepository.saveShop(values);
     },
     validate,
   })
 
-  const maxSteps = 3;
+  const maxSteps = 2;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -66,28 +65,24 @@ export default function ShopStepForm({shop_data, FileInput}) {
   const setCurrentForm = (activeStep) => {
     (activeStep === 0) ? setFirstStep(true)  : setFirstStep(false);
     (activeStep === 1) ? setSecondStep(true)  : setSecondStep(false);
-    (activeStep === 2) ? setThirdStep(true)  : setThirdStep(false);
   }
 
   useEffect(()=>{
     //console.log(shop_data);
-  },[shop_data]);
+  },[user_data]);
 
   return (
     
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  location_data={shop_data} locationChange={locationChange}/>
+                  {<LocationEditByMap  location_data={user_data} locationChange={locationChange}/>}
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
-                  <ShopInfoEdit shop_data={shop_data} handleChange={handleChange}/>
+                  {/*<ShopInfoEdit user_data={user_data} handleChange={handleChange}/>*/}
               </div> 
-              <div className={clsx({ [classes.hide]: !thirdStep })}>
-                  <ShopSignEdit shop_data={shop_data} FileInput={FileInput} handleChange={handleChange}/>
-              </div>
           </form>    
-
+  
       <MobileStepper
         className = {classes.stepper}
         steps={maxSteps}
