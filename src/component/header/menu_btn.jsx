@@ -43,7 +43,7 @@ const Menu = ({authService, locationInfo, userOnLogin, setFormOpen, userInfo, sh
     const classes = useStyles();
     const [state, setState] = useState({ left: false, });
     //const [hasShop, setHasShop] = useState(false);
-    const [user_info, setUserInfo] = useState({name:'test'});
+    const [user_info, setUserInfo] = useState({name:''});
     
 const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

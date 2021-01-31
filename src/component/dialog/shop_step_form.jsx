@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function StepForm({shop_data, FileInput}) {
+export default function ShopStepForm({shop_data, FileInput}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);

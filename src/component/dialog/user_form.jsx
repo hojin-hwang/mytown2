@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import StepForm from './step_form';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -26,37 +25,21 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const UserForm = ({userData, shopData, hasShop, locationInfo, openShop, setFormClose, FileInput}) => {
+const UserForm = ({userData, locationInfo, openUser, setFormClose}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    //const [hasShop, setHasShop] = useState(false);
-    const defalut_shop_data = {
-        id: userData ? userData.uid : '0',
-        uid: userData ? userData.uid : '0',
-        shop_name: '',
-        lat: locationInfo.lat,
-        lng: locationInfo.lng,
-        city_name: locationInfo.cityName,
-        town_name: locationInfo.townName,
-        shop_sign: '',
-        shop_type: '',
-        shop_tel: '',
-        shop_desc: '1',
-        address: '',
-    };
-    //const [shop_data, setShopData] = useState(shopData);
 
     const handleClose = () => {
         setOpen(false);
-        setFormClose('shop');
+        setFormClose('user');
     };
     
     useEffect(() =>{
-        if(openShop)
+        if(openUser)
         {
             setOpen(true);
         }
-    }, [openShop]);
+    }, [openUser]);
     
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -66,14 +49,10 @@ const UserForm = ({userData, shopData, hasShop, locationInfo, openShop, setFormC
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Shop Info
+              User Info
             </Typography>
           </Toolbar>
         </AppBar>
-
-            {hasShop&&shopData&& <StepForm shop_data = {shopData} FileInput={FileInput}/>}
-            {!hasShop&&<StepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
-            {/*!hasShop&&<p>NO LOGIN</p>*/}
 
       </Dialog>
     );

@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import StepForm from './step_form';
+import ShopStepForm from './shop_step_form';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -71,8 +71,8 @@ const ShopForm = ({userData, shopData, hasShop, locationInfo, openShop, setFormC
           </Toolbar>
         </AppBar>
 
-            {hasShop&&shopData&& <StepForm shop_data = {shopData} FileInput={FileInput}/>}
-            {!hasShop&&<StepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
+            {hasShop&&shopData&& <ShopStepForm shop_data = {shopData} FileInput={FileInput}/>}
+            {!hasShop&&<ShopStepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
             {/*!hasShop&&<p>NO LOGIN</p>*/}
 
       </Dialog>
