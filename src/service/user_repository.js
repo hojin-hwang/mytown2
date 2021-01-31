@@ -11,16 +11,43 @@ class UserRepository{
         return () => ref.off();
     }
 
+    syncUser(userId, onUpdate){
+        const ref = firebaseDataBase.ref(`/users/${userId}`);
+        ref.on('value', snapshot =>{
+            const value = snapshot.val();
+            value && onUpdate(value);
+        });
+        return () => ref.off();
+    }
+
     /*
     removeCard(userId, card){
         firebaseDataBase.ref(`${userId}/cards/${card.id}`).remove();
     };
     */
 
-    saveUser(userData)
+    saveUser(userData)//로그인에 사용
     {
         const userId = userData.uid;
-        const userInfo = {id:userData.uid, email:userData.email, name:userData.displayName, login_time:userData.metadata.lastSignInTime};
+        const userInfo = {
+            id: userData.uid, email: userData.email, name: userData.displayName,
+            login_time: userData.metadata.lastSignInTime
+        };
+        firebaseDataBase.ref(`users/${userId}`).set(userInfo);
+    }
+
+    updateUser(userData)//사용자 업데이트
+    {
+        const userId = userData.uid;
+        const userInfo = {
+            id: userData.uid, email: userData.email, name: userData.displayName,
+            city_name: userData.cityname,
+            town_name: userData.townname,
+            code: userData.code,
+            lat: userData.lat,
+            lng: userData.lng,
+            login_time: userData.metadata.lastSignInTime
+        };
         firebaseDataBase.ref(`users/${userId}`).set(userInfo);
     }
 

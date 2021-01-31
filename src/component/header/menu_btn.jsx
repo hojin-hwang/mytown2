@@ -18,6 +18,7 @@ import CardGiftcardIcon from '@material-ui/icons/CardGiftcard'
 import StorefrontIcon from '@material-ui/icons/Storefront';
 import LoginForm from './login_form';
 import UseRepository from '../../service/user_repository';
+import { Person } from '@material-ui/icons';
 
 const userRepository = new UseRepository();
 
@@ -38,12 +39,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-const Menu = ({authService, userOnLogin, setFormOpen}) => {
+const Menu = ({authService, locationInfo, userOnLogin, setFormOpen, userInfo, shopInfo, hasShop}) => {
     const classes = useStyles();
     const [state, setState] = useState({ left: false, });
-    const [hasShop, setHasShop] = useState(false);
-    const [shop_id, setShopId] = useState(null);
+    //const [hasShop, setHasShop] = useState(false);
+    const [user_info, setUserInfo] = useState({name:'test'});
+    
 const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
         return;
@@ -54,7 +55,6 @@ const toggleDrawer = (anchor, open) => (event) => {
 const onLogOut = event => {
   authService.logout();
   setFormOpen('nothing');
-  setHasShop(false);
 };
 
 const newEventForm = event => {
@@ -67,23 +67,15 @@ const newShopForm = event => {
   setFormOpen('shop');
 };
 
+const updateUserForm = event => {
+  setState({ ...state, ['left']: false });
+  setFormOpen('user');
+ };
     
-useEffect(() =>{
-    authService.onAuthChange(user =>{
-        if (user)
-        {
-            const stopSync = userRepository.syncShops(user.uid, shop => {
-                setShopId(shop.id);
-                setHasShop(true);
-                console.log(hasShop);
-                console.log(shop_id);
-            });
-            return () => stopSync();
-        }
-    })
-}, [authService]);  
-    
-    
+useEffect(() => {
+   (userOnLogin) && setUserInfo(userInfo);
+}, [userInfo]); 
+
 const list = (anchor) => (
     <div
       className={classes.menuList}
@@ -98,9 +90,15 @@ const list = (anchor) => (
         </ListItem>
       </List>
       
-      {!userOnLogin&& <LoginForm authService={authService}/>}
+        {!userOnLogin && <LoginForm authService={authService}/>}
      
-      <List onClick={toggleDrawer(anchor, false)}  onKeyDown={toggleDrawer(anchor, false)}>
+      <List>
+        {userOnLogin && <ListItem button onClick={updateUserForm} >
+            <ListItemIcon><Person /></ListItemIcon>
+            <ListItemText primary={user_info.name} />
+            </ListItem>}
+      </List>      
+      <List onClick={toggleDrawer(anchor, false)}  onKeyDown={toggleDrawer(anchor, false)}>      
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
@@ -110,17 +108,10 @@ const list = (anchor) => (
       </List>
       <Divider />
       <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-
         {/* New Shop Making or Modify */}
         {userOnLogin&&<ListItem button onClick={newShopForm}  >
               <ListItemIcon> <StorefrontIcon /></ListItemIcon>
-              <ListItemText primary="New Shop" />
+                <ListItemText primary={shopInfo? shopInfo.shop_name:"New Shop" }/>
         </ListItem>}
 
         {userOnLogin&&hasShop&& <ListItem button onClick={newEventForm} >

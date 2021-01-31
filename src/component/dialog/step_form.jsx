@@ -70,7 +70,7 @@ export default function StepForm({shop_data, FileInput}) {
   }
 
   useEffect(()=>{
-    console.log(shop_data);
+    //console.log(shop_data);
   },[shop_data]);
 
   return (

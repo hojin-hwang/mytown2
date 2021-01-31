@@ -7,6 +7,7 @@ import Title from './title';
 import LocationNameBtn from './location_name_btn';
 import MyPlaceBtn from './my_place_btn';
 import MyLocationBtn from './my_location_btn';
+import UserForm from '../dialog/user_form';
 import ShopForm from '../dialog/shop_form';
 import EventForm from '../dialog/event_form';
 import UseRepository from '../../service/user_repository';
@@ -23,13 +24,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Header({authService, userOnLogin, FileInput}) {
+export default function Header({authService, userOnLogin, FileInput, userInfo}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
+  const [userOpen, setUserOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
-  const [userData, setUserData] = useState();
-  const [shop_data, setShopData] = useState();
+  const [userData, setUserInfo] = useState();
+  const [shopData, setShopData] = useState();
   const [hasShop, setHasShop] = useState(false);
     
   const setLocationInfoFromMap = function(locationInfo)
@@ -37,52 +39,63 @@ export default function Header({authService, userOnLogin, FileInput}) {
       setLocationInfo(locationInfo);
   };
 
-  const setFormOpen = function(form_name){
-    if(form_name === 'shop')
+    const setFormOpen = function (form_name) {
+    if(form_name === 'user')
     {
-      setShopOpen(true);
+        setUserOpen(true);
     }
     else if(form_name === 'event')
     {
       setEventOpen(true);
-    }  
+    }
+    else if(form_name === 'shop')
+    {
+      setShopOpen(true);
+    }      
     else if(form_name === 'nothing')
     {
+        setUserOpen(false);
         setShopOpen(false);
         setEventOpen(false);
     }
   };
 
   const setFormClose = function(form_name){
-    if(form_name === 'shop')
+    if(form_name === 'user')
+    {
+      setUserOpen(false);
+    }
+    else if(form_name === 'shop')
     {
       setShopOpen(false);
     }
-    else if(form_name === 'event')
+      else if(form_name === 'event')
     {
       setEventOpen(false);
     }
   };
 
-  useEffect(() =>{
-    authService.onAuthChange(user =>{
-        if(user){
-            setUserData(user);
-            const stopSync = userRepository.syncShops(user.uid, shop => {
-                setShopData(shop);
-                setHasShop(true);
-                console.log("This use has shop");
-            });
-            return () => stopSync();
-        }
-    })
-},[userData]);
+useEffect(() => {
+    if (userOnLogin && userInfo) { 
+        const stopSync = userRepository.syncShops(userInfo.id, shop => {
+            setShopData(shop);
+            setHasShop(true);
+            console.log("This use has shop");
+        });
+        return () => stopSync();
+    }    
+},[userOnLogin,userInfo]);
 
+useEffect(() => {
+    setUserInfo(userInfo);
+}, [userInfo]); 
+    
+   
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Menu authService={authService} userOnLogin={userOnLogin} setFormOpen={setFormOpen}  />
+                  <Menu authService={authService} locationInfo={locationInfo } userOnLogin={userOnLogin} setFormOpen={setFormOpen} userInfo={userData} shopInfo={shopData} hasShop={ hasShop} />
           <Title />
           <LocationNameBtn  townName={`${locationInfo.cityName} ${locationInfo.townName}`} />
           {userOnLogin&& <MyPlaceBtn />}
@@ -90,8 +103,9 @@ export default function Header({authService, userOnLogin, FileInput}) {
         </Toolbar>
       </AppBar>
       <div>
-              <ShopForm userData={userData} shopData={shop_data} hasShop={ hasShop } locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
-              <EventForm userData={userData} shopData={shop_data} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
+            <UserForm userData={userData} locationInfo={locationInfo} openUser={userOpen} setFormClose={setFormClose} />    
+            <ShopForm userData={userData} shopData={shopData} hasShop={hasShop} locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
+            <EventForm userData={userData} shopData={shopData} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );
