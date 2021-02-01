@@ -11,6 +11,7 @@ import LocationEditByMap from '../contents/location_edit_by_map';
 import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
+import UserInfoEdit from './user_info_edit';
 
 const userRepository = new UseRepository();
 
@@ -40,11 +41,11 @@ export default function UserStepForm({user_data, locationInfo}) {
   const [activeStep, setActiveStep] = useState(0);
   const [firstStep, setFirstStep] = useState(true);
   const [secondStep, setSecondStep] = useState(false);
-  
+    
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
     initialValues: user_data,
     onSubmit: (values) => {
-      userRepository.saveShop(values);
+      userRepository.updateUser(values);
     },
     validate,
   })
@@ -68,7 +69,7 @@ export default function UserStepForm({user_data, locationInfo}) {
   }
 
   useEffect(()=>{
-    //console.log(shop_data);
+
   },[user_data]);
 
   return (
@@ -76,10 +77,10 @@ export default function UserStepForm({user_data, locationInfo}) {
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  {<LocationEditByMap  location_data={user_data} locationChange={locationChange}/>}
+                  <LocationEditByMap  location_data={user_data.city_name? user_data:locationInfo} locationChange={locationChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
-                  {/*<ShopInfoEdit user_data={user_data} handleChange={handleChange}/>*/}
+                  <UserInfoEdit user_data={user_data} handleChange={handleChange}/>
               </div> 
           </form>    
   

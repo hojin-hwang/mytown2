@@ -48,7 +48,7 @@ const LocationEditByMap =  React.memo(({location_data, locationChange}) => {
         marker.setPosition(coords);
         marker.setMap(map);
         //map.setCenter(coords);
-       
+        
         kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
             searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {
@@ -69,6 +69,7 @@ const LocationEditByMap =  React.memo(({location_data, locationChange}) => {
                     locationChange(locationInfo);
                 }   
             });
+
         });
 
         map.setDraggable(true); 

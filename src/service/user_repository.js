@@ -40,14 +40,20 @@ class UserRepository{
     {
         const userId = userData.uid;
         const userInfo = {
-            id: userData.uid, email: userData.email, name: userData.displayName,
-            city_name: userData.cityname,
-            town_name: userData.townname,
-            code: userData.code,
+            id: userData.id,
+            name: userData.name,
+            email: userData.email, 
+            user_email: userData.user_email, 
+            user_name: userData.user_name,
+            city_name: userData.city_name,
+            town_name: userData.town_name,
+            user_tel : userData.user_tel,
             lat: userData.lat,
             lng: userData.lng,
-            login_time: userData.metadata.lastSignInTime
+            login_time: userData.lastSignInTime
         };
+        console.log(userInfo);
+        console.log(userData);
         firebaseDataBase.ref(`users/${userId}`).set(userInfo);
     }
 
