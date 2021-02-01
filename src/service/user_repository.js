@@ -53,8 +53,8 @@ class UserRepository{
             login_time: userData.lastSignInTime
         };
         console.log(userInfo);
-        console.log(userData);
-        firebaseDataBase.ref(`users/${userId}`).set(userInfo);
+        //console.log(userData);
+        //firebaseDataBase.ref(`users/${userId}`).set(userInfo);
     }
 
     saveShop(shopData)
