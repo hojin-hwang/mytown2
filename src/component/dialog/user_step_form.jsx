@@ -45,7 +45,7 @@ export default function UserStepForm({user_data, locationInfo}) {
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
     initialValues: user_data,
     onSubmit: (values) => {
-      userRepository.updateUser(values);
+      userRepository.saveUserInfo(values);
     },
     validate,
   })

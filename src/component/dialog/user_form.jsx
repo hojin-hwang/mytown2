@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const UserForm = ({userData, locationInfo, openUser, setFormClose}) => {
+const UserForm = ({userAccount, locationInfo, openUser, setFormClose}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
 
@@ -55,7 +55,7 @@ const UserForm = ({userData, locationInfo, openUser, setFormClose}) => {
           </Toolbar>
             </AppBar>
             
-        {userData&& <UserStepForm user_data = {userData} locationInfo={locationInfo}/>}
+        {userAccount&& <UserStepForm user_data = {userAccount} locationInfo={locationInfo}/>}
       </Dialog>
     );
 };

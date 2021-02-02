@@ -20,29 +20,36 @@ class UserRepository{
         return () => ref.off();
     }
 
+    syncUserInfo(userId, onUpdate){
+        const ref = firebaseDataBase.ref(`/user_info/${userId}`);
+        ref.on('value', snapshot =>{
+            const value = snapshot.val();
+            value && onUpdate(value);
+        });
+        return () => ref.off();
+    }
+
     /*
     removeCard(userId, card){
         firebaseDataBase.ref(`${userId}/cards/${card.id}`).remove();
     };
     */
 
-    saveUser(userData)//로그인에 사용
+    saveUser(userAccount)//로그인에 사용
     {
-        const userId = userData.uid;
+        const userId = userAccount.uid;
         const userInfo = {
-            id: userData.uid, email: userData.email, name: userData.displayName,
-            login_time: userData.metadata.lastSignInTime
+            id: userAccount.uid, email: userAccount.email, name: userAccount.displayName,
+            login_time: userAccount.metadata.lastSignInTime
         };
         firebaseDataBase.ref(`users/${userId}`).set(userInfo);
     }
 
-    updateUser(userData)//사용자 업데이트
+    saveUserInfo(userData)//사용자 업데이트
     {
         const userId = userData.uid;
         const userInfo = {
             id: userData.id,
-            name: userData.name,
-            email: userData.email, 
             user_email: userData.user_email, 
             user_name: userData.user_name,
             city_name: userData.city_name,
@@ -50,11 +57,10 @@ class UserRepository{
             user_tel : userData.user_tel,
             lat: userData.lat,
             lng: userData.lng,
-            login_time: userData.lastSignInTime
         };
         console.log(userInfo);
         console.log(userData);
-        firebaseDataBase.ref(`users/${userId}`).set(userInfo);
+        //firebaseDataBase.ref(`user_info/${userId}`).set(userInfo);
     }
 
     saveShop(shopData)

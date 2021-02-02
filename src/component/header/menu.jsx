@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Menu = ({authService, locationInfo, userOnLogin, setFormOpen, userInfo, shopInfo, hasShop}) => {
+const Menu = ({authService, locationInfo, userOnLogin, setFormOpen, userAccount, shopInfo, hasShop}) => {
     const classes = useStyles();
     const [state, setState] = useState({ left: false, });
     //const [hasShop, setHasShop] = useState(false);
-    const [user_info, setUserInfo] = useState({name:''});
+    const [user_account, setUserAccount] = useState({name:''});
     
 const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -73,8 +73,8 @@ const updateUserForm = event => {
  };
     
 useEffect(() => {
-   (userOnLogin) && setUserInfo(userInfo);
-}, [userInfo]); 
+   (userOnLogin) && setUserAccount(userAccount);
+}, [userAccount]); 
 
 const list = (anchor) => (
     <div
@@ -95,7 +95,7 @@ const list = (anchor) => (
       <List>
         {userOnLogin && <ListItem button onClick={updateUserForm} >
             <ListItemIcon><Person /></ListItemIcon>
-            <ListItemText primary={user_info.name} />
+            <ListItemText primary={user_account.name} />
             </ListItem>}
       </List>      
       <List onClick={toggleDrawer(anchor, false)}  onKeyDown={toggleDrawer(anchor, false)}>      

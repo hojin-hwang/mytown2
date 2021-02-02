@@ -17,7 +17,7 @@ function App({authService,FileInput }) {
   const TOWN_SHOP_ACTION = true;
   const [action, setAction] = useState(TOWN_NEWS_ACTION);
   const [userOnLogin, setUserOnLogin] = useState(false);
-  const [user_info, setUserInfo] = useState();  
+  const [user_account, setUserAcount] = useState();  
   const [user_id, setUserId] = useState(); 
 
   useEffect(()=>{
@@ -32,7 +32,7 @@ function App({authService,FileInput }) {
     if(user_id)
     {
         const stopSync = userRepository.syncUser(user_id, user => {
-            setUserInfo(user);
+          setUserAcount(user);
         });
     return () => stopSync();
     }
@@ -45,7 +45,7 @@ function App({authService,FileInput }) {
 
   return (
     <ThemeProvider theme = {theme}>
-          <Header authService={authService} userOnLogin={userOnLogin} FileInput={FileInput} userInfo={user_info }/>
+          <Header authService={authService} userOnLogin={userOnLogin} FileInput={FileInput} userAccount={user_account }/>
       <ActionBar action={action} onClick={goSite} userOnLogin={userOnLogin} />
       
       {!action &&  <NewsBox />}
