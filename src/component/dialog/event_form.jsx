@@ -26,12 +26,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const EventForm = ({userData, shopData, hasShop, locationInfo, openEvent, setFormClose, FileInput}) => {
+const EventForm = ({userAccount, shopData, hasShop, locationInfo, openEvent, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const defalut_shop_data = {
-        id: userData ? userData.uid : '0',
-        uid: userData ? userData.uid : '0',
+        id: userAccount ? userAccount.uid : '0',
+        uid: userAccount ? userAccount.uid : '0',
         shop_name: '',
         lat: locationInfo.lat,
         lng: locationInfo.lng,

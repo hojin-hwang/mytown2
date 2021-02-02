@@ -24,13 +24,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Header({authService, userOnLogin, FileInput, userInfo}) {
+export default function Header({authService, userOnLogin, FileInput, userAccount}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
   const [userOpen, setUserOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
-  const [userData, setUserInfo] = useState();
+  const [user_account, setUserAccount] = useState();
+  const [userData, setUserData] = useState();
   const [shopData, setShopData] = useState();
   const [hasShop, setHasShop] = useState(false);
     
@@ -76,26 +77,36 @@ export default function Header({authService, userOnLogin, FileInput, userInfo}) 
   };
 
 useEffect(() => {
-    if (userOnLogin && userInfo) { 
-        const stopSync = userRepository.syncShops(userInfo.id, shop => {
+    if (userOnLogin&&userAccount) { 
+        const stopSync = userRepository.syncShops(userAccount.id, shop => {
             setShopData(shop);
             setHasShop(true);
             console.log("This use has shop");
         });
         return () => stopSync();
-    }    
-},[userOnLogin,userInfo]);
+    }
+    
+     
+},[userOnLogin]);
 
 useEffect(() => {
-    setUserInfo(userInfo);
-}, [userInfo]); 
+    setUserAccount(userAccount);
+    if (userAccount) { 
+        const stopSync = userRepository.syncUserInfo(userAccount.id, user => {
+            setUserData(user);
+            setUserAccount({ ...user_account, 'name':user.user_name});
+            console.log("This use has own's info");
+        });
+        return () => stopSync();
+    }
+}, [userAccount]); 
     
    
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-                  <Menu authService={authService} locationInfo={locationInfo } userOnLogin={userOnLogin} setFormOpen={setFormOpen} userInfo={userData} shopInfo={shopData} hasShop={ hasShop} />
+                  <Menu authService={authService} locationInfo={locationInfo } userOnLogin={userOnLogin} setFormOpen={setFormOpen} userAccount={user_account} shopInfo={shopData} hasShop={ hasShop} />
           <Title />
           <LocationNameBtn  townName={`${locationInfo.cityName} ${locationInfo.townName}`} />
           {userOnLogin&& <MyPlaceBtn />}
@@ -103,9 +114,9 @@ useEffect(() => {
         </Toolbar>
       </AppBar>
       <div>
-            <UserForm userData={userData} locationInfo={locationInfo} openUser={userOpen} setFormClose={setFormClose} />    
-            <ShopForm userData={userData} shopData={shopData} hasShop={hasShop} locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
-            <EventForm userData={userData} shopData={shopData} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
+            <UserForm userAccount={userAccount} userData={userData} locationInfo={locationInfo} openUser={userOpen} setFormClose={setFormClose} />    
+            <ShopForm userAccount={userAccount} shopData={shopData} hasShop={hasShop} locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
+            <EventForm userAccount={userAccount} shopData={shopData} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );

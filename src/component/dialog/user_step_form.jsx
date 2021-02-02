@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function UserStepForm({user_data, locationInfo}) {
+export default function UserStepForm({userData, locationInfo}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
@@ -43,9 +43,9 @@ export default function UserStepForm({user_data, locationInfo}) {
   const [secondStep, setSecondStep] = useState(false);
     
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
-    initialValues: user_data,
+    initialValues: userData,
     onSubmit: (values) => {
-      userRepository.updateUser(values);
+      userRepository.saveUserInfo(values);
     },
     validate,
   })
@@ -69,18 +69,18 @@ export default function UserStepForm({user_data, locationInfo}) {
   }
 
   useEffect(()=>{
-
-  },[user_data]);
+      
+  },[userData]);
 
   return (
     
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  location_data={user_data.city_name? user_data:locationInfo} locationChange={locationChange}/>
+                  <LocationEditByMap location_data={userData} UserMap={true} locationChange={locationChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
-                  <UserInfoEdit user_data={user_data} handleChange={handleChange}/>
+                  <UserInfoEdit userData={userData} handleChange={handleChange}/>
               </div> 
           </form>    
   
