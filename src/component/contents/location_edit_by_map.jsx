@@ -28,6 +28,7 @@ const LocationEditByMap =  React.memo(({location_data,UserMap, locationChange}) 
     const classes = useStyles();
     const mapId = `shopmap_${location_data.id}`;
     const [locationInfo, setLocationInfo] = useState({address:location_data.address, town_name:location_data.town_name, city_name:location_data.city_name, lat:location_data.lat, lng:location_data.lng});
+    
     useEffect(() => {
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
@@ -47,8 +48,24 @@ const LocationEditByMap =  React.memo(({location_data,UserMap, locationChange}) 
         const coords = new kakao.maps.LatLng(location_data.lat, location_data.lng);
         marker.setPosition(coords);
         marker.setMap(map);
-        //map.setCenter(coords);
         
+        searchDetailAddrFromCoords(coords, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                let detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+                // 법정동 상세 주소정보를 표시합니다
+                const locationInfo =
+                {
+                    lat: coords.lat,
+                    lng: coords.lng,
+                    city_name: result[0].address.region_2depth_name,
+                    town_name: result[0].address.region_3depth_name,
+                    address: detailAddr,
+                }
+                setLocationInfo(locationInfo);
+                locationChange(locationInfo);
+            }
+         });
+
         kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
             searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {

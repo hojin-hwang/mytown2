@@ -80,8 +80,9 @@ useEffect(() => {
     if (userOnLogin&&userAccount) { 
         const stopSync = userRepository.syncShops(userAccount.id, shop => {
             setShopData(shop);
-            setHasShop(true);
-            console.log("This use has shop");
+            shop&&setHasShop(true);
+            shop&&console.log("This use has shop");
+
         });
         return () => stopSync();
     }

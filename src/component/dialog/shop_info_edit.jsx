@@ -43,7 +43,7 @@ const handleChangeText = (event) => {
 
 useEffect(() =>{
     setShoptextInfo(shop_data);
-    //console.log(shop_text_info);
+    console.log(shop_data);
 }, [shop_data]);
 
 return (

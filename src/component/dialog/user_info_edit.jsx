@@ -52,7 +52,6 @@ const handleChangeText = (event) => {
 }
 
 useEffect(() =>{
-    console.log(userData)
     
 }, [userData]);
 

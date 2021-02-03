@@ -79,7 +79,8 @@ class UserRepository{
             shop_tel : shopData.shop_tel, 
             shop_desc : shopData.shop_desc 
         }
-        firebaseDataBase.ref(`shops/${userId}`).set(shopInfo);
+        console.log(shopInfo)
+        //firebaseDataBase.ref(`shops/${userId}`).set(shopInfo);
 
     }
 }

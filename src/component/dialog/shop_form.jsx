@@ -30,9 +30,9 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     //const [hasShop, setHasShop] = useState(false);
-    const defalut_shop_data = {
-        id: userAccount ? userAccount.uid : '0',
-        uid: userAccount ? userAccount.uid : '0',
+    const [defalut_shop_data, setDefaultShopData] = useState({
+        id: userAccount ? userAccount.id : '0',
+        uid: userAccount ? userAccount.id : '0',
         shop_name: '',
         lat: locationInfo.lat,
         lng: locationInfo.lng,
@@ -41,9 +41,9 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
         shop_sign: '',
         shop_type: '',
         shop_tel: '',
-        shop_desc: '1',
+        shop_desc: '',
         address: '',
-    };
+    });
     //const [shop_data, setShopData] = useState(shopData);
 
     const handleClose = () => {
@@ -57,6 +57,10 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
             setOpen(true);
         }
     }, [openShop]);
+
+    useEffect(() =>{
+        setDefaultShopData({...defalut_shop_data, id: userAccount ? userAccount.id : '0', uid: userAccount ? userAccount.id : '0',})
+    }, [userAccount]);
     
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
