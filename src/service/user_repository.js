@@ -47,7 +47,7 @@ class UserRepository{
 
     saveUserInfo(userData)//사용자 업데이트
     {
-        const userId = userData.uid;
+        const userId = userData.id;
         const userInfo = {
             id: userData.id,
             user_email: userData.user_email, 
@@ -58,9 +58,8 @@ class UserRepository{
             lat: userData.lat,
             lng: userData.lng,
         };
-        console.log(userInfo);
-        console.log(userData);
-        //firebaseDataBase.ref(`user_info/${userId}`).set(userInfo);
+        
+        firebaseDataBase.ref(`user_info/${userId}`).set(userInfo);
     }
 
     saveShop(shopData)
@@ -81,7 +80,6 @@ class UserRepository{
             shop_desc : shopData.shop_desc 
         }
         firebaseDataBase.ref(`shops/${userId}`).set(shopInfo);
-
     }
 }
 

@@ -30,10 +30,9 @@ textArea: {
 }));
 
  
-//export default function ShopInfoEdit({shop_data, handleChange}) {
-const ShopInfoEdit =  React.memo(({shop_data, handleChange}) => {  
+const ShopInfoEdit =  React.memo(({shopData, handleChange}) => {  
 
-const [shop_text_info, setShoptextInfo] = useState(shop_data);
+const [shop_text_info, setShoptextInfo] = useState(shopData);
     
 const classes = useStyles();
 
@@ -42,9 +41,8 @@ const handleChangeText = (event) => {
 }
 
 useEffect(() =>{
-    setShoptextInfo(shop_data);
-    //console.log(shop_text_info);
-}, [shop_data]);
+    setShoptextInfo(shopData);
+}, [shopData]);
 
 return (
 <div className={classes.root}>

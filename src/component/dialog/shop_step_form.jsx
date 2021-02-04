@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function ShopStepForm({shop_data, FileInput}) {
+export default function ShopStepForm({shopData, FileInput}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
@@ -43,7 +43,7 @@ export default function ShopStepForm({shop_data, FileInput}) {
   const [thirdStep, setThirdStep] = React.useState(false);
   
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
-    initialValues: shop_data,
+    initialValues: shopData,
     onSubmit: (values) => {
       userRepository.saveShop(values);
     },
@@ -70,21 +70,21 @@ export default function ShopStepForm({shop_data, FileInput}) {
   }
 
   useEffect(()=>{
-    console.log(shop_data);
-  },[shop_data]);
+    
+  },[shopData]);
 
   return (
     
     <div >
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  location_data={shop_data} locationChange={locationChange}/>
+                  <LocationEditByMap  location_data={shopData} locationChange={locationChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })} >
-                  <ShopInfoEdit shop_data={shop_data} handleChange={handleChange}/>
+                  <ShopInfoEdit shopData={shopData} handleChange={handleChange}/>
               </div> 
               <div className={clsx({ [classes.hide]: !thirdStep })}>
-                  <ShopSignEdit shop_data={shop_data} FileInput={FileInput} handleChange={handleChange}/>
+                  <ShopSignEdit shopData={shopData} FileInput={FileInput} handleChange={handleChange}/>
               </div>
           </form>    
 

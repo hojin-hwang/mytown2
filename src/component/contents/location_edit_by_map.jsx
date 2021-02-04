@@ -24,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
 }));;
 
 
-const LocationEditByMap =  React.memo(({location_data, locationChange}) => {   
+const LocationEditByMap =  React.memo(({location_data,UserMap, locationChange}) => {   
     const classes = useStyles();
     const mapId = `shopmap_${location_data.id}`;
     const [locationInfo, setLocationInfo] = useState({address:location_data.address, town_name:location_data.town_name, city_name:location_data.city_name, lat:location_data.lat, lng:location_data.lng});
+    
     useEffect(() => {
         const marker = new kakao.maps.Marker();
         const geocoder = new kakao.maps.services.Geocoder();
@@ -47,8 +48,24 @@ const LocationEditByMap =  React.memo(({location_data, locationChange}) => {
         const coords = new kakao.maps.LatLng(location_data.lat, location_data.lng);
         marker.setPosition(coords);
         marker.setMap(map);
-        //map.setCenter(coords);
         
+        searchDetailAddrFromCoords(coords, function (result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+                let detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+                // 법정동 상세 주소정보를 표시합니다
+                const locationInfo =
+                {
+                    lat: coords.Ma,
+                    lng: coords.La,
+                    city_name: result[0].address.region_2depth_name,
+                    town_name: result[0].address.region_3depth_name,
+                    address: detailAddr,
+                }
+                setLocationInfo(locationInfo);
+                locationChange(locationInfo);
+            }
+         });
+
         kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
             searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                 if (status === kakao.maps.services.Status.OK) {
@@ -73,19 +90,29 @@ const LocationEditByMap =  React.memo(({location_data, locationChange}) => {
         });
 
         map.setDraggable(true); 
-        setLocationInfo(location_data);
-      }, [location_data,mapId]);
+        //setLocationInfo(location_data);
+      }, [location_data, mapId]);
 
 
     return(
         <div>
             <div className={classes.postionInput}>
-            <TextField name="address" className={classes.address} 
-            label="Address" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} 
-            value={locationInfo.address} InputLabelProps={{
-            shrink: true,}}/>
-
-            <TextField type="hidden" name="city_name" value={locationInfo.city_name} />
+                {UserMap &&
+                    <TextField type="hidden" name="address" value={locationInfo.address} />}
+                {UserMap &&
+                    <TextField name="city_name" className={classes.address} 
+                    label="City" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} 
+                    value={locationInfo.city_name} InputLabelProps={{
+                    shrink: true,}}/>
+                }    
+                {!UserMap &&
+                    <TextField name="address" className={classes.address} 
+                        label="Address" placeholder="지도에서 선택하세요" InputProps={{ readOnly: true, }}
+                        value={locationInfo.address} InputLabelProps={{
+                            shrink: true,
+                        }} />}
+                {!UserMap &&
+                    <TextField type="hidden" name="city_name" value={locationInfo.city_name} />}
             <TextField name="town_name"  className={classes.town} label="Town" placeholder="동네"  value={locationInfo.town_name} InputProps={{readOnly: true,}} InputLabelProps={{
             shrink: true,}} />
             </div>

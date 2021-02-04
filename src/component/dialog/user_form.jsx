@@ -26,21 +26,40 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const UserForm = ({userAccount, locationInfo, openUser, setFormClose}) => {
+const UserForm = ({userAccount, userData, locationInfo, openUser, setFormClose}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
+    const [user_data, setUserData] = useState({'city_name': '', 'town_name': '','address': '', 'lat': '', 'lng': '', 'user_name': '', 'user_email': '', 'user_tel':'','id':'' });
 
     const handleClose = () => {
         setOpen(false);
         setFormClose('user');
     };
     
-    useEffect(() =>{
+    useEffect(() => {
         if(openUser)
         {
             setOpen(true);
         }
     }, [openUser]);
+
+    useEffect(() => {
+        setUserData(userData);
+    }, [userData]);
+
+    useEffect(() => {
+        if(!userData && userAccount)
+        {
+            setUserData({...user_data,'user_name': userAccount.name, 'user_email': userAccount.email,'id':userAccount.id});
+        }
+    }, [userAccount]);
+    
+    useEffect(() => {
+        if(!userData && locationInfo)
+        {
+            setUserData({...user_data,'lat': locationInfo.lat, 'lng': locationInfo.lng,'city_name':locationInfo.cityName, 'town_name':locationInfo.townName});
+        }
+     }, [locationInfo]);
     
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -55,7 +74,7 @@ const UserForm = ({userAccount, locationInfo, openUser, setFormClose}) => {
           </Toolbar>
             </AppBar>
             
-        {userAccount&& <UserStepForm user_data = {userAccount} locationInfo={locationInfo}/>}
+        {userAccount&& <UserStepForm userData = {user_data} locationInfo={locationInfo}/>}
       </Dialog>
     );
 };

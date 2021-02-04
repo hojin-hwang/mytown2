@@ -31,6 +31,7 @@ export default function Header({authService, userOnLogin, FileInput, userAccount
   const [shopOpen, setShopOpen] = useState(false);
   const [eventOpen, setEventOpen] = useState(false);
   const [user_account, setUserAccount] = useState();
+  const [userData, setUserData] = useState();
   const [shopData, setShopData] = useState();
   const [hasShop, setHasShop] = useState(false);
     
@@ -76,18 +77,28 @@ export default function Header({authService, userOnLogin, FileInput, userAccount
   };
 
 useEffect(() => {
-    if (userOnLogin && userAccount) { 
+    if (userOnLogin&&userAccount) { 
         const stopSync = userRepository.syncShops(userAccount.id, shop => {
             setShopData(shop);
-            setHasShop(true);
-            console.log("This use has shop");
+            shop&&setHasShop(true);
+            shop&&console.log("This use has shop");
         });
         return () => stopSync();
-    }    
-},[userOnLogin,userAccount]);
+    }
+    
+     
+},[userOnLogin]);
 
 useEffect(() => {
     setUserAccount(userAccount);
+    if (userAccount) { 
+        const stopSync = userRepository.syncUserInfo(userAccount.id, user => {
+            setUserData(user);
+            setUserAccount({ ...user_account, 'name':user.user_name});
+            console.log("This use has own's info");
+        });
+        return () => stopSync();
+    }
 }, [userAccount]); 
     
    
@@ -103,7 +114,7 @@ useEffect(() => {
         </Toolbar>
       </AppBar>
       <div>
-            <UserForm userAccount={userAccount} locationInfo={locationInfo} openUser={userOpen} setFormClose={setFormClose} />    
+            <UserForm userAccount={userAccount} userData={userData} locationInfo={locationInfo} openUser={userOpen} setFormClose={setFormClose} />    
             <ShopForm userAccount={userAccount} shopData={shopData} hasShop={hasShop} locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
             <EventForm userAccount={userAccount} shopData={shopData} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>

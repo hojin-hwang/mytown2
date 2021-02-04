@@ -29,10 +29,10 @@ formSubmit:{
 }));
 
 
-export default function ShopSignEdit({shop_data, FileInput, handleChange}) {
-const [shop_sign, setShop_sign] = useState(shop_data.shop_sign);
+export default function ShopSignEdit({shopData, FileInput, handleChange}) {
+const [shop_sign, setShop_sign] = useState(shopData.shop_sign);
 const classes = useStyles();
-const fileName = shop_data.shop_sign;
+const fileName = shopData.shop_sign;
 
 const onFileChange = file =>{
     
@@ -42,8 +42,8 @@ const onFileChange = file =>{
 }
 
 useEffect(() =>{
-    setShop_sign(shop_data.shop_sign);
-}, [shop_data]);
+    setShop_sign(shopData.shop_sign);
+}, [shopData]);
 
 return (
 <div className={classes.root}>

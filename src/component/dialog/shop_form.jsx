@@ -29,9 +29,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const defalut_shop_data = {
-        id: userAccount ? userAccount.uid : '0',
-        uid: userAccount ? userAccount.uid : '0',
+    const [defalut_shop_data, setDefaultShopData] = useState({
+        id: userAccount ? userAccount.id : '0',
+        uid: userAccount ? userAccount.id : '0',
         shop_name: '',
         lat: locationInfo.lat,
         lng: locationInfo.lng,
@@ -40,9 +40,9 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
         shop_sign: '',
         shop_type: '',
         shop_tel: '',
-        shop_desc: '1',
+        shop_desc: '',
         address: '',
-    };
+    });
     //const [shop_data, setShopData] = useState(shopData);
 
     const handleClose = () => {
@@ -56,7 +56,15 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
             setOpen(true);
         }
     }, [openShop]);
+
+    useEffect(() =>{
+        setDefaultShopData({...defalut_shop_data, id: userAccount ? userAccount.id : '0', uid: userAccount ? userAccount.id : '0',})
+    }, [userAccount]);
     
+    useEffect(() =>{
+      setDefaultShopData({...defalut_shop_data,  lat: locationInfo.lat, lng: locationInfo.lng, city_name: locationInfo.cityName, town_name: locationInfo.townName, })
+  }, [locationInfo]);
+
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -70,8 +78,8 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
           </Toolbar>
         </AppBar>
 
-            {hasShop&&shopData&& <ShopStepForm shop_data = {shopData} FileInput={FileInput}/>}
-            {!hasShop&&<ShopStepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
+            {hasShop&&shopData&& <ShopStepForm  shopData = {shopData} FileInput={FileInput}/>}
+            {!hasShop&&<ShopStepForm hasShop = {hasShop} shopData = {defalut_shop_data} FileInput={FileInput}/>}
             {/*!hasShop&&<p>NO LOGIN</p>*/}
 
       </Dialog>

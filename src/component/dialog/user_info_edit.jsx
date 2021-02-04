@@ -41,9 +41,9 @@ formSubmit:{
 
  
 //export default function ShopInfoEdit({shop_data, handleChange}) {
-const UserInfoEdit =  React.memo(({user_data, handleChange}) => {  
+const UserInfoEdit =  React.memo(({userData, handleChange}) => {  
 
-const [user_text_info, setUsertextInfo] = useState(user_data);
+//const [user_text_info, setUsertextInfo] = useState(userData);
     
 const classes = useStyles();
 
@@ -52,24 +52,19 @@ const handleChangeText = (event) => {
 }
 
 useEffect(() =>{
-    console.log(user_text_info.user_name)
-    if(user_text_info.user_name === undefined)
-    {
-        user_text_info.user_name = user_text_info.name;
-        
-    } 
-}, [user_data]);
+    
+}, [userData]);
 
 return (
 <div className={classes.root}>
     <TextField required name="user_name" label="사용자 이름" style={{ margin: 8 }} placeholder="(필수) 이름" fullWidth
-        margin="normal"  defaultValue={user_text_info.user_name? user_text_info.user_name: user_text_info.name} onChange={handleChangeText} />
+        margin="normal"  defaultValue={userData.user_name} onChange={handleChangeText} />
 
     <TextField name="user_email" label="이메일" style={{ margin: 8 }} placeholder="이메일" fullWidth
-        margin="normal" defaultValue={user_text_info.user_email} onChange={handleChangeText} />
+        margin="normal" defaultValue={userData.user_email} onChange={handleChangeText} />
 
     <TextField name="user_tel" label="전화번호" style={{ margin: 8 }} placeholder="필수가 아닙니다. 01012345678" fullWidth
-        margin="normal" InputLabelProps={{ shrink: true, }} defaultValue={user_text_info.user_tel} onChange={handleChangeText} />
+        margin="normal" InputLabelProps={{ shrink: true, }} defaultValue={userData.user_tel} onChange={handleChangeText} />
     <Button type="submit" className={classes.formSubmit} color="inherit" >save</Button>
 </div>
 
