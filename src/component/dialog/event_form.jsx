@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import ShopStepForm from './shop_step_form';
+import EventStepForm from './event_step_form';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -26,24 +26,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });  
 
-const EventForm = ({userAccount, shopData, hasShop, locationInfo, openEvent, setFormClose, FileInput}) => {
+const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    const defalut_shop_data = {
-        id: userAccount ? userAccount.uid : '0',
-        uid: userAccount ? userAccount.uid : '0',
-        shop_name: '',
-        lat: locationInfo.lat,
-        lng: locationInfo.lng,
-        city_name: locationInfo.cityName,
-        town_name: locationInfo.townName,
-        shop_sign: '',
-        shop_type: '',
-        shop_tel: '',
-        shop_desc: '1',
-        address: '',
-    };
-
+    
     const handleClose = () => {
         setOpen(false);
         setFormClose('event');
@@ -55,6 +41,10 @@ const EventForm = ({userAccount, shopData, hasShop, locationInfo, openEvent, set
             setOpen(true);
         }
     }, [openEvent]);
+
+    useEffect(() =>{
+        console.log(shopData);
+    }, [shopData]);
     
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -68,10 +58,9 @@ const EventForm = ({userAccount, shopData, hasShop, locationInfo, openEvent, set
             </Typography>
           </Toolbar>
         </AppBar>
-
-            {hasShop&&shopData&& <ShopStepForm shop_data = {shopData} FileInput={FileInput}/>}
-            {!hasShop&&<ShopStepForm shop_data = {defalut_shop_data} FileInput={FileInput}/>}
-            {/*!hasShop&&<p>NO LOGIN</p>*/}
+        
+        
+        <EventStepForm shopData={shopData} FileInput={FileInput} />
 
       </Dialog>
     );

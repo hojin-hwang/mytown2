@@ -87,7 +87,7 @@ useEffect(() => {
     }
     
      
-},[userOnLogin]);
+},[userOnLogin,userAccount]);
 
 useEffect(() => {
     setUserAccount(userAccount);
@@ -116,7 +116,7 @@ useEffect(() => {
       <div>
             <UserForm userAccount={userAccount} userData={userData} locationInfo={locationInfo} openUser={userOpen} setFormClose={setFormClose} />    
             <ShopForm userAccount={userAccount} shopData={shopData} hasShop={hasShop} locationInfo={locationInfo} openShop={shopOpen} setFormClose={setFormClose} FileInput={FileInput} />
-            <EventForm userAccount={userAccount} shopData={shopData} hasShop={ hasShop } locationInfo={locationInfo} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
+            <EventForm shopData={shopData} openEvent={eventOpen} setFormClose={setFormClose} FileInput={FileInput}/>
       </div>
     </div>
   );
