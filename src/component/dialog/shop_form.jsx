@@ -29,7 +29,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    //const [hasShop, setHasShop] = useState(false);
     const defalut_shop_data = {
         id: userAccount ? userAccount.uid : '0',
         uid: userAccount ? userAccount.uid : '0',
