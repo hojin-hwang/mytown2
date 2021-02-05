@@ -14,6 +14,11 @@ import { Paper } from '@material-ui/core';
 
 
 const useStyles = makeStyles({
+    typeboard:{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+    },
     root: {
         maxWidth: 345,
     },
@@ -36,16 +41,16 @@ const useStyles = makeStyles({
     },
 });
 
-export default function ShopEventType() {
+export default function EventType({handleNext}) {
 const classes = useStyles();
 const [selectedValue, setSelectedValue] = React.useState('p');
     const handleChange = (event) => {
     setSelectedValue(event.target.getAttribute('value'));
-        console.log(event.target.getAttribute('value'));
+    handleNext();
 }
 
 return (
-<div>
+<div className={classes.typeboard }>
     <Card className={classes.root } >
         <CardActionArea >
             <CardActions onClick={handleChange} value="p">
@@ -64,7 +69,7 @@ return (
         </CardActionArea>
     </Card>
 
-    <Card className={classes.root, classes.second} >
+    <Card className={`${classes.root} ${classes.second}`} >
         <CardActionArea >
             <CardActions onClick={handleChange} value="t">
                 <Radio checked={selectedValue==='t' } onChange={handleChange} value="t" color="default"

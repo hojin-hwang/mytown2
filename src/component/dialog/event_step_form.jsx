@@ -5,8 +5,8 @@ import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import ShopEventType from './shop_event_type';
-import ShopSignEdit from './shop_sign_edit';
+import EventType from './event_type';
+import EventEdit from './event_edit';
 import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
@@ -47,18 +47,19 @@ export default function EventStepForm({shopData, FileInput}) {
     },
     validate,
   })
-
+  
   const maxSteps = 2;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    
     setCurrentForm(activeStep + 1);
+    
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     setCurrentForm(activeStep -1);
+    
   };
 
   const setCurrentForm = (activeStep) => {
@@ -73,12 +74,12 @@ export default function EventStepForm({shopData, FileInput}) {
   return (
     
     <div >
-          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit} >
               <div className={clsx({ [classes.hide]: !firstStep })}>
-                    <ShopEventType />
+                    <EventType handleNext={handleNext} />
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })}>
-                  <ShopSignEdit shopData={shopData} FileInput={FileInput} handleChange={handleChange}/>
+                  <EventEdit shopData={shopData} FileInput={FileInput} handleChange={handleChange}/>
               </div>
           </form>    
 

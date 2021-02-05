@@ -54,7 +54,7 @@ const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
               <CloseIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              Shop Event
+              New Event
             </Typography>
           </Toolbar>
         </AppBar>
