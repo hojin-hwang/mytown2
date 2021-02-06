@@ -62,19 +62,17 @@ const fileName = eventData.event_pic;
 const onFileChange = file =>{
     setEventPic(file.url);
     const event_pic = { target: { name: 'event_pic', value: file.url } }
-    const event_text = { target: {name: 'event_text', value: '' } }
     handleChange(event_pic);
-    handleChange(event_text);
 }
     
 const handleChangeText = (event) => {
-    const event_pic = { target: {name: 'event_pic', value: '' } }
-    handleChange(event_pic);
+    //const event_pic = { target: {name: 'event_pic', value: '' } }
+    //handleChange(event_pic);
     handleChange(event);
 }
 
 useEffect(() =>{
-    console.log(eventPic)
+    //console.log(eventPic)
 }, [eventPic]);
 
 return (
@@ -82,7 +80,7 @@ return (
 
 
     <Card className={classes.root}>
-            {eventPic && <CardHeader className={classes.file_upload} action={<FileInput name={fileName} onFileChange={onFileChange} />} />}
+            {eventPic && <CardHeader className={classes.file_upload} action={<FileInput name={fileName} btnText="이벤트 사진을 선택하세요" onFileChange={onFileChange} />} />}
             {eventPic && !event_pic && <CardMedia className={classes.media} image="/images/event_sample_1.jpg" title="shop event" />}
             {eventPic && event_pic && <CardMedia className={classes.media} image={event_pic} title="shop event" />}
 

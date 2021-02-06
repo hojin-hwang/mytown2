@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
   
-const ImageFileInput = memo(({ imageUploader, name, onFileChange }) => {
+const ImageFileInput = memo(({ imageUploader, name, btnText, onFileChange }) => {
     const classes = useStyles();
 
     const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ const ImageFileInput = memo(({ imageUploader, name, onFileChange }) => {
                 <label htmlFor="contained-button-file">
                     <Button variant="contained" color="default" className={classes.button} startIcon={<CloudUploadIcon />}
                     onClick={onButtonClick}
-                    > 새로운 가게 이미지를 선택하세요</Button>
+                > {btnText}</Button>
                 </label>
             }
         </div>

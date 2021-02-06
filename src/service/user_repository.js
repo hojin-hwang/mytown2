@@ -85,9 +85,9 @@ class UserRepository{
     saveEvent(eventData)
     {
         const shopId = eventData.shop_id;
-        const eventId = eventData.id;
+        const current_date = new Date();
         const eventInfo = {
-            id: eventData.id,  
+            id: `${eventData.id}${current_date.getTime()}`,  
             event_pic: eventData.event_pic? eventData.event_pic: '',
             event_text : eventData.event_text? eventData.event_text: '',
             shop_id : eventData.shop_id, 
@@ -100,11 +100,11 @@ class UserRepository{
             shop_sign: eventData.shop_sign, 
             shop_type : eventData.shop_type, 
             shop_tel : eventData.shop_tel, 
-            shop_desc : eventData.shop_desc 
+            shop_desc: eventData.shop_desc, 
+            update_date : eventData.update_date
         }
-        console.log(eventInfo);
-        //firebaseDataBase.ref(`events/${shopId}`).set(eventInfo);
-        //firebaseDataBase.ref(`events_backup/${eventId}`).set(eventInfo);
+        firebaseDataBase.ref(`events/${shopId}`).set(eventInfo);
+        firebaseDataBase.ref(`events_backup/${eventInfo.id}`).set(eventInfo);
     }
 }
 

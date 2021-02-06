@@ -47,7 +47,7 @@ useEffect(() =>{
 
 return (
 <div className={classes.root}>
-    <FileInput name={fileName} onFileChange={onFileChange}/>
+    <FileInput name={fileName} btnText="새로운 가게 사진을 선택하세요" onFileChange={onFileChange}/>
     <input type="hidden" name="shop_sign" value={shop_sign} />
     
     {!shop_sign && <img className={classes.signNoImg} src="/images/no_store_sign.png" alt='no_shop_sign' /> }
