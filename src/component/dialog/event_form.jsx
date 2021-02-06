@@ -73,7 +73,7 @@ const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
         </AppBar>
         
         
-        <EventStepForm eventData={defalut_event_data} FileInput={FileInput} />
+            <EventStepForm eventData={defalut_event_data} FileInput={FileInput} setFormClose={handleClose}/>
 
       </Dialog>
     );

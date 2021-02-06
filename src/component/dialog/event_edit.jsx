@@ -66,13 +66,11 @@ const onFileChange = file =>{
 }
     
 const handleChangeText = (event) => {
-    //const event_pic = { target: {name: 'event_pic', value: '' } }
-    //handleChange(event_pic);
     handleChange(event);
 }
 
 useEffect(() =>{
-    //console.log(eventPic)
+
 }, [eventPic]);
 
 return (
