@@ -29,12 +29,22 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
-    
+    const [defalut_event_data, setDefaultEventData] = useState(shopData);
+
     const handleClose = () => {
         setOpen(false);
         setFormClose('event');
     };
     
+    const getFormatDate = (date) => {
+        let year = date.getFullYear();              
+        let month = (1 + date.getMonth());          
+              month = month >= 10 ? month : '0' + month;  
+        let day = date.getDate();                   
+              day = day >= 10 ? day : '0' + day;         
+        return year + '-' + month + '-' + day;       
+    };
+
     useEffect(() =>{
         if(openEvent)
         {
@@ -42,10 +52,13 @@ const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
         }
     }, [openEvent]);
 
-    useEffect(() =>{
-        console.log(shopData);
+    useEffect(() => {
+        const current_date = new Date();
+        const update_date = getFormatDate(current_date);
+         shopData&&setDefaultEventData({...shopData, id: `${shopData.id}${current_date.getTime()}` , shop_id:shopData.id, update_date:update_date });
     }, [shopData]);
-    
+
+   
     return(
         <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
@@ -60,7 +73,7 @@ const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
         </AppBar>
         
         
-        <EventStepForm shopData={shopData} FileInput={FileInput} />
+        <EventStepForm eventData={defalut_event_data} FileInput={FileInput} />
 
       </Dialog>
     );

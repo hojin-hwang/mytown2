@@ -69,8 +69,7 @@ export default function UserStepForm({userData, locationInfo}) {
   }
 
   useEffect(()=>{
-    console.log("useEffect");
-    console.log(userData);
+
   },[userData]);
 
   return (

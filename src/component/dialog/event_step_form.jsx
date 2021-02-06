@@ -33,15 +33,15 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function EventStepForm({shopData, FileInput}) {
+export default function EventStepForm({eventData, FileInput}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
-  
-  const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
-    initialValues: shopData,
+    
+  const { values, errors, submitting, handleChange, handleSubmit } = useForm({
+    initialValues: eventData,
     onSubmit: (values) => {
       userRepository.saveShop(values);
     },
@@ -67,10 +67,7 @@ export default function EventStepForm({shopData, FileInput}) {
     (activeStep === 1) ? setSecondStep(true)  : setSecondStep(false);
   }
 
-  useEffect(()=>{
     
-  },[shopData]);
-
   return (
     
     <div >
@@ -79,7 +76,7 @@ export default function EventStepForm({shopData, FileInput}) {
                     <EventType handleNext={handleNext} />
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })}>
-                  <EventEdit shopData={shopData} FileInput={FileInput} handleChange={handleChange}/>
+                  <EventEdit eventData={eventData} FileInput={FileInput} handleChange={handleChange}/>
               </div>
           </form>    
 
