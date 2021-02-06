@@ -55,7 +55,7 @@ const EventForm = ({shopData, openEvent, setFormClose, FileInput}) => {
     useEffect(() => {
         const current_date = new Date();
         const update_date = getFormatDate(current_date);
-         shopData&&setDefaultEventData({...shopData, id: `${shopData.id}${current_date.getTime()}` , shop_id:shopData.id, update_date:update_date });
+         shopData&&setDefaultEventData({...shopData, id: `${shopData.id}${current_date.getTime()}` , shop_id:shopData.id, update_date:update_date , event_text:'',});
     }, [shopData]);
 
    

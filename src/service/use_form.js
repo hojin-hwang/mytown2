@@ -8,7 +8,8 @@ function useForm({initialValues, onSubmit, validate}){
     //폼의 각 입력이 변경될때
     const handleChange = (event) => {
         const {name, value} = event.target;
-        setValues({...values, [name]:value});
+        setValues({ ...values, [name]: value });
+        //console.log(`[${name}]: ${value}`);
     }
 
     //지도에서 위치를 변경할때

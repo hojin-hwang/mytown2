@@ -81,6 +81,31 @@ class UserRepository{
         }
         firebaseDataBase.ref(`shops/${userId}`).set(shopInfo);
     }
+
+    saveEvent(eventData)
+    {
+        const shopId = eventData.shop_id;
+        const eventId = eventData.id;
+        const eventInfo = {
+            id: eventData.id,  
+            event_pic: eventData.event_pic? eventData.event_pic: '',
+            event_text : eventData.event_text? eventData.event_text: '',
+            shop_id : eventData.shop_id, 
+            shop_name : eventData.shop_name, 
+            lat : eventData.lat, 
+            lng :  eventData.lng, 
+            city_name : eventData.city_name, 
+            town_name : eventData.town_name, 
+            address : eventData.address, 
+            shop_sign: eventData.shop_sign, 
+            shop_type : eventData.shop_type, 
+            shop_tel : eventData.shop_tel, 
+            shop_desc : eventData.shop_desc 
+        }
+        console.log(eventInfo);
+        //firebaseDataBase.ref(`events/${shopId}`).set(eventInfo);
+        //firebaseDataBase.ref(`events_backup/${eventId}`).set(eventInfo);
+    }
 }
 
 export default UserRepository;

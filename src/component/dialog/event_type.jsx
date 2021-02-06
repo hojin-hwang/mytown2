@@ -46,7 +46,7 @@ const classes = useStyles();
 const [selectedValue, setSelectedValue] = React.useState('p');
     const handleChange = (event) => {
     setSelectedValue(event.target.getAttribute('value'));
-    handleNext();
+    handleNext(event.target.getAttribute('value'));
 }
 
 return (

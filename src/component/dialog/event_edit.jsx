@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
-import { Avatar, Card, CardContent, CardHeader, CardMedia, Typography } from '@material-ui/core';
+import { Avatar, Card, CardContent, CardHeader, CardMedia, TextField, Typography } from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,32 +52,43 @@ color: "white",
 }));
 
 
-export default function EventEdit({eventData, FileInput, handleChange}) {
-const [event_data, setEventData] = useState(eventData);
+export default function EventEdit({eventData, FileInput, handleChange, eventPic}) {
+//const [event_data, setEventData] = useState(eventData);
+const [event_pic, setEventPic] = useState();
+    
 const classes = useStyles();
-const fileName = eventData.shop_sign;
+const fileName = eventData.event_pic;
 
 const onFileChange = file =>{
-
-//setShop_sign(file.url);
-const file_name = {target:{name:'shop_sign', value:file.url}}
-handleChange(file_name);
+    setEventPic(file.url);
+    const event_pic = { target: { name: 'event_pic', value: file.url } }
+    const event_text = { target: {name: 'event_text', value: '' } }
+    handleChange(event_pic);
+    handleChange(event_text);
+}
+    
+const handleChangeText = (event) => {
+    const event_pic = { target: {name: 'event_pic', value: '' } }
+    handleChange(event_pic);
+    handleChange(event);
 }
 
-
 useEffect(() =>{
-//setShop_sign(shopData.shop_sign);
-//console.log(event_data);
-}, [eventData]);
+    console.log(eventPic)
+}, [eventPic]);
 
 return (
 <div className={classes.root}>
 
 
     <Card className={classes.root}>
-        <CardHeader className={classes.file_upload} action={ <FileInput name={fileName} onFileChange={onFileChange} />}/>
-            <CardMedia className={classes.media} image="/images/event_sample_1.jpg" title="shop event" />
-            
+            {eventPic && <CardHeader className={classes.file_upload} action={<FileInput name={fileName} onFileChange={onFileChange} />} />}
+            {eventPic && !event_pic && <CardMedia className={classes.media} image="/images/event_sample_1.jpg" title="shop event" />}
+            {eventPic && event_pic && <CardMedia className={classes.media} image={event_pic} title="shop event" />}
+
+            {!eventPic && <TextField name="event_text"  label="이벤트 글" style={{ margin:'18 8 8 8'}} placeholder="행사글을 써주세요 !!" fullWidth
+        margin="normal"  multiline rows={4} InputLabelProps={{ shrink: true, }}  defaultValue=""
+        variant="outlined" onChange={handleChangeText}/> }
         <CardContent className={classes.shop_title}>
             <Avatar aria-label="shop-profile" className={classes.avatar} src={eventData.shop_sign} />
             <Typography className={classes.shop_name}> {eventData.shop_name}</Typography>
@@ -90,9 +101,8 @@ return (
         </CardContent>
     </Card>
 
-
-
-    {eventData.shop_sign && <Button type="submit" className={classes.formSubmit} color="inherit">save</Button> }
+        {eventPic && event_pic && <Button type="submit" className={classes.formSubmit} color="inherit">save</Button>}
+        {!eventPic&& <Button type="submit" className={classes.formSubmit} color="inherit">save</Button> }
 </div>
 
 );

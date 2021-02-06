@@ -39,20 +39,24 @@ export default function EventStepForm({eventData, FileInput}) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [firstStep, setFirstStep] = React.useState(true);
   const [secondStep, setSecondStep] = React.useState(false);
+  const [eventPic, setEventPic] = React.useState(true);
     
   const { values, errors, submitting, handleChange, handleSubmit } = useForm({
     initialValues: eventData,
     onSubmit: (values) => {
-      userRepository.saveShop(values);
+      userRepository.saveEvent(values);
     },
     validate,
   })
   
   const maxSteps = 2;
 
-  const handleNext = () => {
+  const handleNext = (event_type) => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setCurrentForm(activeStep + 1);
+    
+    const event_pic = (event_type === 't')? false : true;
+    setEventPic(event_pic);  
     
   };
 
@@ -76,7 +80,7 @@ export default function EventStepForm({eventData, FileInput}) {
                     <EventType handleNext={handleNext} />
               </div> 
               <div className={clsx({ [classes.hide]: !secondStep })}>
-                  <EventEdit eventData={eventData} FileInput={FileInput} handleChange={handleChange}/>
+                  <EventEdit eventData={eventData} FileInput={FileInput} handleChange={handleChange} eventPic={ eventPic }/>
               </div>
           </form>    
 
