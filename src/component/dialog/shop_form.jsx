@@ -78,8 +78,8 @@ const ShopForm = ({userAccount, shopData, hasShop, locationInfo, openShop, setFo
           </Toolbar>
         </AppBar>
 
-            {hasShop&&shopData&& <ShopStepForm  shopData = {shopData} FileInput={FileInput}/>}
-            {!hasShop&&<ShopStepForm hasShop = {hasShop} shopData = {defalut_shop_data} FileInput={FileInput}/>}
+            {hasShop&&shopData&& <ShopStepForm  shopData = {shopData} FileInput={FileInput} setFormClose={handleClose}/>}
+            {!hasShop&&<ShopStepForm hasShop = {hasShop} shopData = {defalut_shop_data} FileInput={FileInput} setFormClose={handleClose}/>}
             {/*!hasShop&&<p>NO LOGIN</p>*/}
 
       </Dialog>

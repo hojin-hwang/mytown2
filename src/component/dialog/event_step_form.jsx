@@ -11,7 +11,6 @@ import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
 import Snackbar from '@material-ui/core/Snackbar';
-import { Alert } from '@material-ui/lab';
 
 
 const userRepository = new UseRepository();
@@ -44,6 +43,7 @@ const [firstStep, setFirstStep] = useState(true);
 const [secondStep, setSecondStep] = useState(false);
 const [eventPic, setEventPic] = useState(true);
 const [success_open, setSuccessOpen] = useState(false);
+    
 const { values, errors, submitting, handleChange, handleSubmit } = useForm({
 initialValues: eventData,
 onSubmit: (values) => {

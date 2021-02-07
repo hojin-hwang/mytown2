@@ -19,6 +19,7 @@ shop_title: {
 fontSize: '1.2rem',
 width: '100%',
     display: 'flex',
+    alignItems: 'center',
     borderBottom: '1px solid #eee',
 },
 shop_name: {
@@ -82,7 +83,7 @@ return (
             {eventPic && !event_pic && <CardMedia className={classes.media} image="/images/event_sample_1.jpg" title="shop event" />}
             {eventPic && event_pic && <CardMedia className={classes.media} image={event_pic} title="shop event" />}
 
-            {!eventPic && <TextField name="event_text"  label="이벤트 글" style={{ margin:'18 8 8 8'}} placeholder="행사글을 써주세요 !!" fullWidth
+            {!eventPic && <TextField name="event_text"  label="이벤트 글" style={{ margin:'18 8 8 8' , fontSize: '1.6rem'}} placeholder="행사글을 써주세요 !!" fullWidth
         margin="normal"  multiline rows={4} InputLabelProps={{ shrink: true, }}  defaultValue=""
         variant="outlined" onChange={handleChangeText}/> }
         <CardContent className={classes.shop_title}>

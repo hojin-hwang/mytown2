@@ -11,102 +11,113 @@ import ShopSignEdit from './shop_sign_edit';
 import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const userRepository = new UseRepository();
 
 const useStyles = makeStyles((theme) => ({
-  root : {
-        padding : "1em",
-  },
-  default : {
-      display:"none",
-  },
-  currentStep : {
-    display:"block",
-    backgroundColor : "pink",
-  },
-  stepper : {
-    position: "fixed",
-    bottom: 0,
-    right: 0,
-    left: 0,
-  },
-  hide: { display: 'none',}
+root : {
+padding : "1em",
+},
+default : {
+display:"none",
+},
+currentStep : {
+display:"block",
+backgroundColor : "pink",
+},
+stepper : {
+position: "fixed",
+bottom: 0,
+right: 0,
+left: 0,
+},
+hide: { display: 'none',}
 }));
 
-export default function ShopStepForm({shopData, FileInput}) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [firstStep, setFirstStep] = React.useState(true);
-  const [secondStep, setSecondStep] = React.useState(false);
-  const [thirdStep, setThirdStep] = React.useState(false);
-  
-  const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
-    initialValues: shopData,
-    onSubmit: (values) => {
-      userRepository.saveShop(values);
-    },
-    validate,
-  })
+export default function ShopStepForm({shopData, FileInput,setFormClose}) {
+const classes = useStyles();
+const theme = useTheme();
+const [activeStep, setActiveStep] = React.useState(0);
+const [firstStep, setFirstStep] = React.useState(true);
+const [secondStep, setSecondStep] = React.useState(false);
+const [thirdStep, setThirdStep] = React.useState(false);
+const [success_open, setSuccessOpen] = useState(false);
 
-  const maxSteps = 3;
+const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
+initialValues: shopData,
+onSubmit: (values) => {
+    userRepository.saveShop(values);
+    if (submitting)
+    {
+        setSuccessOpen(true);
+        setTimeout(() => {
+            setFormClose();
+        }, 1500);
+    }
+},
+validate,
+})
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    
-    setCurrentForm(activeStep + 1);
-  };
+const maxSteps = 3;
 
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    setCurrentForm(activeStep -1);
-  };
+const handleNext = () => {
+setActiveStep((prevActiveStep) => prevActiveStep + 1);
 
-  const setCurrentForm = (activeStep) => {
-    (activeStep === 0) ? setFirstStep(true)  : setFirstStep(false);
-    (activeStep === 1) ? setSecondStep(true)  : setSecondStep(false);
-    (activeStep === 2) ? setThirdStep(true)  : setThirdStep(false);
-  }
+setCurrentForm(activeStep + 1);
+};
 
-  useEffect(()=>{
-    
-  },[shopData]);
+const handleBack = () => {
+setActiveStep((prevActiveStep) => prevActiveStep - 1);
+setCurrentForm(activeStep -1);
+};
 
-  return (
-    
-    <div >
-          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
-              <div className={clsx({ [classes.hide]: !firstStep })}>
-                  <LocationEditByMap  location_data={shopData} locationChange={locationChange}/>
-              </div> 
-              <div className={clsx({ [classes.hide]: !secondStep })} >
-                  <ShopInfoEdit shopData={shopData} handleChange={handleChange}/>
-              </div> 
-              <div className={clsx({ [classes.hide]: !thirdStep })}>
-                  <ShopSignEdit shopData={shopData} FileInput={FileInput} handleChange={handleChange}/>
-              </div>
-          </form>    
+const setCurrentForm = (activeStep) => {
+(activeStep === 0) ? setFirstStep(true) : setFirstStep(false);
+(activeStep === 1) ? setSecondStep(true) : setSecondStep(false);
+(activeStep === 2) ? setThirdStep(true) : setThirdStep(false);
+}
 
-      <MobileStepper
-        className = {classes.stepper}
-        steps={maxSteps}
-        position="static"
-        variant="dots"
-        activeStep={activeStep}
-        nextButton={
-          <Button size="small" onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-            Next
-            {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-          </Button>
+const handleClose = () => {
+setSuccessOpen(false);
+};
+useEffect(()=>{
+
+},[shopData]);
+
+return (
+
+<div>
+    <Snackbar open={success_open} message="정상적으로 등록되었습니다" autoHideDuration={2000} onClose={handleClose} />
+    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <div className={clsx({ [classes.hide]: !firstStep })}>
+            <LocationEditByMap location_data={shopData} locationChange={locationChange} />
+        </div>
+        <div className={clsx({ [classes.hide]: !secondStep })}>
+            <ShopInfoEdit shopData={shopData} handleChange={handleChange} />
+        </div>
+        <div className={clsx({ [classes.hide]: !thirdStep })}>
+            <ShopSignEdit shopData={shopData} FileInput={FileInput} handleChange={handleChange} />
+        </div>
+    </form>
+
+    <MobileStepper className={classes.stepper} steps={maxSteps} position="static" variant="dots" activeStep={activeStep}
+        nextButton={ <Button size="small" onClick={handleNext} disabled={activeStep===maxSteps - 1}>
+        Next
+        {theme.direction === 'rtl' ?
+        <KeyboardArrowLeft /> :
+        <KeyboardArrowRight />}
+        </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-            {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+        <Button size="small" onClick={handleBack} disabled={activeStep===0}>
+            {theme.direction === 'rtl' ?
+            <KeyboardArrowRight /> :
+            <KeyboardArrowLeft />}
             Back
-          </Button>
+        </Button>
         }
-      />
-    </div>
-  );
+        />
+</div>
+);
 }

@@ -7,11 +7,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LocationEditByMap from '../contents/location_edit_by_map';
 
-
 import validate from '../../service/validate'
 import useForm from '../../service/use_form';
 import UseRepository from '../../service/user_repository';
 import UserInfoEdit from './user_info_edit';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const userRepository = new UseRepository();
 
@@ -35,17 +35,25 @@ const useStyles = makeStyles((theme) => ({
   hide: { display: 'none',}
 }));
 
-export default function UserStepForm({userData, locationInfo}) {
+export default function UserStepForm({userData, locationInfo, setFormClose}) {
   const classes = useStyles();
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [firstStep, setFirstStep] = useState(true);
   const [secondStep, setSecondStep] = useState(false);
+  const [success_open, setSuccessOpen] = useState(false);
     
   const { values, errors, submitting, handleChange, handleSubmit, locationChange } = useForm({
     initialValues: userData,
     onSubmit: (values) => {
-      userRepository.saveUserInfo(values);
+        userRepository.saveUserInfo(values);
+        if (submitting)
+        {
+            setSuccessOpen(true);
+            setTimeout(() => {
+                setFormClose();
+            }, 1500);
+        }
     },
     validate,
   })
@@ -68,6 +76,9 @@ export default function UserStepForm({userData, locationInfo}) {
     (activeStep === 1) ? setSecondStep(true)  : setSecondStep(false);
   }
 
+  const handleClose = () => {
+    setSuccessOpen(false);
+  };  
   useEffect(()=>{
 
   },[userData]);
@@ -75,6 +86,7 @@ export default function UserStepForm({userData, locationInfo}) {
   return (
     
     <div >
+          <Snackbar open={success_open} message="정상적으로 등록되었습니다" autoHideDuration={2000} onClose={handleClose} />
           <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
                   <LocationEditByMap location_data={userData} UserMap={true} locationChange={locationChange}/>

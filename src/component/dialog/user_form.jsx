@@ -74,7 +74,7 @@ const UserForm = ({userAccount, userData, locationInfo, openUser, setFormClose})
           </Toolbar>
             </AppBar>
             
-        {userAccount&& <UserStepForm userData = {user_data} locationInfo={locationInfo}/>}
+        {userAccount&& <UserStepForm userData = {user_data} locationInfo={locationInfo} setFormClose={handleClose}/>}
       </Dialog>
     );
 };
