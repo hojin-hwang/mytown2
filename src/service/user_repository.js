@@ -1,7 +1,7 @@
 import { firebaseDataBase } from './firebase';
 
 class UserRepository{
-    syncShops(userId, onUpdate){
+    syncShop(userId, onUpdate){
         const ref = firebaseDataBase.ref(`/shops/${userId}`);
         ref.on('value', snapshot =>{
             const value = snapshot.val();

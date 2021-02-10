@@ -78,7 +78,7 @@ export default function Header({authService, userOnLogin, FileInput, userAccount
 
 useEffect(() => {
     if (userOnLogin&&userAccount) { 
-        const stopSync = userRepository.syncShops(userAccount.id, shop => {
+        const stopSync = userRepository.syncShop(userAccount.id, shop => {
             setShopData(shop);
             shop&&setHasShop(true);
             shop&&console.log("This use has shop");
