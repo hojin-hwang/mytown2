@@ -87,7 +87,7 @@ export default function UserStepForm({userData, locationInfo, setFormClose}) {
     
     <div >
           <Snackbar open={success_open} message="정상적으로 등록되었습니다" autoHideDuration={2000} onClose={handleClose} />
-          <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+          <form  className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
               <div className={clsx({ [classes.hide]: !firstStep })}>
                   <LocationEditByMap location_data={userData} UserMap={true} locationChange={locationChange}/>
               </div> 

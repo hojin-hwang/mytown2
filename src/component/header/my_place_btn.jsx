@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Place from '@material-ui/icons/Place';
 import IconButton from '@material-ui/core/IconButton';
 
 const useStyles = makeStyles((theme) => ({
-    myPlaceBtn: {
-      
-    },
+    active : {
+        color: '#fff700',
+    }
 }));
 
-const MyPlaceBtn = (props) => {
+const MyPlaceBtn = ({setLocationInfoFromMap, userInfo, isPlace}) => {
     const classes = useStyles();
+    const getLocationInfo = function(){
+        setLocationInfoFromMap({townName:userInfo.town_name, cityName:userInfo.city_name, code:'', type:'user'});
+    }
+
+    useEffect(()=>{
+        if(userInfo) {
+            setLocationInfoFromMap({townName:userInfo.town_name, cityName:userInfo.city_name, code:'', type:'user'});
+        }
+    },[userInfo]);
 
     return(
-        <IconButton edge="end" className={`${classes.myPlaceBtn}`} color="inherit" aria-label="my-place">
+        <IconButton className={isPlace&&classes.active} edge="end" color="inherit" aria-label="my-place" onClick={getLocationInfo}>
             <Place />
         </IconButton>
     );

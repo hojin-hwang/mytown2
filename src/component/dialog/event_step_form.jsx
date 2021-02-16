@@ -92,7 +92,7 @@ return (
 
         <Snackbar open={success_open} message="정상적으로 등록되었습니다" autoHideDuration={2000} onClose={handleClose} />
 
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
+        <form id="shop_event_form" className={classes.root} noValidate autoComplete="off" onSubmit={handleSubmit}>
         <div className={clsx({ [classes.hide]: !firstStep })}>
             <EventType handleNext={handleNext} />
         </div>

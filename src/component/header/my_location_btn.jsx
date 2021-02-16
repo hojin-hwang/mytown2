@@ -5,12 +5,12 @@ import IconButton from '@material-ui/core/IconButton';
 import UseKakoMap from '../../service/use_kakao_map';
 
 const useStyles = makeStyles((theme) => ({
-    myLocationBtn: {
-      
-    },
+    active : {
+        color: '#fff700',
+    }
 }));
 
-const MyLocationBtn = ({setLocationInfoFromMap}) => {
+const MyLocationBtn = ({setLocationInfoFromMap, userAccount,isLocation}) => {
     const classes = useStyles();
     const [currentGeoInfo, setGeoInfo] = useState();
 
@@ -41,12 +41,14 @@ const MyLocationBtn = ({setLocationInfoFromMap}) => {
     };
     
     useEffect(()=>{
-        getLocationInfo();
-    },[]);
+        if(!userAccount) {
+            getLocationInfo();
+        }
+    },[userAccount]);
     
 
     return(
-        <IconButton edge="end" className={`${classes.myLocationBtn}`} color="inherit" aria-label="current-location" onClick={getLocationInfo}>
+        <IconButton edge="end" className={isLocation&&classes.active} color="inherit" aria-label="current-location" onClick={getLocationInfo}>
             <UseKakoMap position={currentGeoInfo} getLocationInfo={getLocationInfoFromMap}/>
             <MyLocation />
         </IconButton>

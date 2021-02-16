@@ -47,6 +47,7 @@ const UseKakoMap = ({position, getLocationInfo}) => {
                 townName: town_name,
                 lat: lat,
                 lng : lng,
+                type : 'current',
             }
 
            updateTownInfo(current_town_info);

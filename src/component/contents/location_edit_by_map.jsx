@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const LocationEditByMap =  React.memo(({location_data,UserMap, locationChange}) => {   
     const classes = useStyles();
     const mapId = `shopmap_${location_data.id}`;
-    const [locationInfo, setLocationInfo] = useState({address:location_data.address, town_name:location_data.town_name, city_name:location_data.city_name, lat:location_data.lat, lng:location_data.lng});
+    const [locationInfo, setLocationInfo] = useState({address:location_data.address, town_name:location_data.town_name, city_name:location_data.city_name, lat:location_data.lat, lng:location_data.lng, type:'current'});
     
     useEffect(() => {
         const marker = new kakao.maps.Marker();
@@ -98,21 +98,19 @@ const LocationEditByMap =  React.memo(({location_data,UserMap, locationChange}) 
         <div>
             <div className={classes.postionInput}>
                 {UserMap &&
-                    <TextField type="hidden" name="address" value={locationInfo.address} />}
-                {UserMap &&
                     <TextField name="city_name" className={classes.address} 
                     label="City" placeholder="지도에서 선택하세요" InputProps={{readOnly: true,}} 
                     value={locationInfo.city_name} InputLabelProps={{
                     shrink: true,}}/>
                 }    
+                {UserMap && <TextField type="hidden" name="address" value={locationInfo.address} />}
                 {!UserMap &&
                     <TextField name="address" className={classes.address} 
                         label="Address" placeholder="지도에서 선택하세요" InputProps={{ readOnly: true, }}
                         value={locationInfo.address} InputLabelProps={{
                             shrink: true,
                         }} />}
-                {!UserMap &&
-                    <TextField type="hidden" name="city_name" value={locationInfo.city_name} />}
+                {!UserMap && <TextField type="hidden" name="city_name" value={locationInfo.city_name} />}
             <TextField name="town_name"  className={classes.town} label="Town" placeholder="동네"  value={locationInfo.town_name} InputProps={{readOnly: true,}} InputLabelProps={{
             shrink: true,}} />
             </div>

@@ -22,9 +22,10 @@ const useStyles = makeStyles({
     color: '#fff',
     backgroundColor: '#1ca23f',
   },
+  
 });
 
-export default function Header({authService, userOnLogin, FileInput, userAccount}) {
+export default function Header({authService, userOnLogin, FileInput, userAccount, userInfo, setLocation}) {
   const classes = useStyles();
   const [locationInfo, setLocationInfo] = useState({townName:'', cityName:'', code:''});
   const [userOpen, setUserOpen] = useState(false);
@@ -34,11 +35,25 @@ export default function Header({authService, userOnLogin, FileInput, userAccount
   const [userData, setUserData] = useState();
   const [shopData, setShopData] = useState();
   const [hasShop, setHasShop] = useState(false);
-    
+  const [isLocation, setLocationBtn] = useState(false);
+  const [isPlace, setPlaceBtn] = useState(false);
+  
   const setLocationInfoFromMap = function(locationInfo)
   {   
       setLocationInfo(locationInfo);
+      setLocation(locationInfo);
+      if(locationInfo.type === 'current')
+      {
+        setLocationBtn(true);
+        setPlaceBtn(false);
+      }
+      else
+      {
+        setLocationBtn(false);
+        setPlaceBtn(true);
+      }
   };
+
 
     const setFormOpen = function (form_name) {
     if(form_name === 'user')
@@ -82,16 +97,16 @@ useEffect(() => {
             setShopData(shop);
             shop&&setHasShop(true);
             shop&&console.log("This use has shop");
+            //console.log(userInfo)
         });
         return () => stopSync();
     }
     
      
-},[userOnLogin,userAccount]);
+},[userOnLogin,userAccount,userInfo]);
 
 useEffect(() => {
-    setUserAccount(userAccount);
-    if (userAccount) { 
+  if (userAccount) { 
         const stopSync = userRepository.syncUserInfo(userAccount.id, user => {
             setUserData(user);
             setUserAccount({ ...user_account, 'name':user.user_name});
@@ -108,9 +123,9 @@ useEffect(() => {
         <Toolbar>
                   <Menu authService={authService} locationInfo={locationInfo } userOnLogin={userOnLogin} setFormOpen={setFormOpen} userAccount={user_account} shopInfo={shopData} hasShop={ hasShop} />
           <Title />
-          <LocationNameBtn  townName={`${locationInfo.cityName} ${locationInfo.townName}`} />
-          {userOnLogin&& <MyPlaceBtn />}
-          <MyLocationBtn setLocationInfoFromMap={setLocationInfoFromMap} />
+          <LocationNameBtn  townName={`${locationInfo.cityName} ${locationInfo.townName}`}  />
+          {userOnLogin&& <MyPlaceBtn setLocationInfoFromMap={setLocationInfoFromMap} userInfo={userInfo} isPlace={isPlace}/>}
+          <MyLocationBtn setLocationInfoFromMap={setLocationInfoFromMap} userAccount={user_account} isLocation={isLocation}/>
         </Toolbar>
       </AppBar>
       <div>
