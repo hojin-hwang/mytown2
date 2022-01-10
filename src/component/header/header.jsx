@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   appBar : {
-    color: '#fff',
+    color: '#ffffff',
     backgroundColor: '#1ca23f',
   },
   
