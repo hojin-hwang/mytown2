@@ -63,11 +63,11 @@ function App({authService,FileInput }) {
   return (
     <ThemeProvider theme = {theme}>
           <Header authService={authService} userOnLogin={userOnLogin} FileInput={FileInput} userAccount={user_account } userInfo={user_info} setLocation={setLocation}/>
-      <ActionBar action={action} onClick={goSite} userOnLogin={userOnLogin} />
+          <ActionBar action={action} onClick={goSite} userOnLogin={userOnLogin} />
       
-      {!action &&  <NewsBox locationInfo={location_info}/>}
-      
-      {action && <EventBox userOnLogin={userOnLogin} locationInfo={location_info}/> }
+          {!action &&  <NewsBox locationInfo={location_info}/>}
+          
+          {action && <EventBox userOnLogin={userOnLogin} locationInfo={location_info}/> }
       
     </ThemeProvider>  
   );

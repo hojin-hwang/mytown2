@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# 위치기반 게시물 등록 프로젝트
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -7,6 +9,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the project directory, you can run:
 
 ### `yarn start`
+- .env.development File을 만들고 내용은 "env-development-temp" 참고
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.

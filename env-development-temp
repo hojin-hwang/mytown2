@@ -1,0 +1,10 @@
+## create file  ".env.development"
+## write firebase conifg (Firebase --> console --> 프로젝트 개요 -> 일반)
+## delete this comments 
+
+REACT_APP_FIREBASE_API_KEY = Your-Api-key
+REACT_APP_FIREBASE_AUTH_DOMAIN = your-auth-domain.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID = your-project-id
+REACT_APP_FIREBASE_DATABASE_URL = https://your-data-base-url.firebaseio.com
+REACT_APP_FIREBASE_BUCKET = your-bucket-info
+

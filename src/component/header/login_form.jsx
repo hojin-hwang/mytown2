@@ -40,9 +40,9 @@ const LoginForm = ({authService}) => {
 
     return(
    <div className={classes.loginBox}>
-        <Button variant="contained" size="large" color="primary" className={classes.kakoLogin} onClick={onLogin}>
+        {/* <Button variant="contained" size="large" color="primary" className={classes.kakoLogin} onClick={onLogin}>
         카카오 로그인
-        </Button>   
+        </Button>    */}
 
         <Button variant="contained" size="large" className={classes.googleLogin} onClick={onLogin}>
         Google
